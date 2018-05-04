@@ -1,10 +1,22 @@
 
 $(document).ready(function(){
-		$("#submitNewBatch").click(function(){
+		var issuerData;
+
+		$.ajax({
+				url: "http:localhost:8080/viewIssuerInfo/njnisarg", 
+				success: function(result){issuerData = JSON.parse(result)}, 
+				statusCode : {200 : function(){
+					console.log(issuerData);
+					generateIssuerDashboard(issuerData);
+				}}
+			});
+
+		/*$("#submitNewBatch").click(function(){
 			var info1Val = $("#info1").val();
 			var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
 			$("#containerDisplayingBatches").prepend(newAddedDiv);
-		});
+		});*/
+		
 });
 
 /* ======================== index =================================== */
@@ -48,16 +60,6 @@ var selDiv = "";
 		}
 	}
 
-	// $(document).ready(function(){
-	// 	$("#issueButton").click(function(){
-	// 		$.ajax({
-	// 			url: "https://bdpfgo9tr7.execute-api.us-east-1.amazonaws.com/testing/cert-create/namanhr/batch1", 
-	// 			success: function(result){console.log(result);}, 
-	// 			statusCode : {200 : function(){console.log("Cool request done!")}}
-	// 		});
-	// 	});
-	// });
-
 	function issue(){
 		console.log("event triggered")
 		$.ajax({
@@ -70,4 +72,23 @@ var selDiv = "";
 		var info1Val = $("#info1").val();
 		var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
 		$("#containerDisplayingBatches").prepend(newAddedDiv);
+	}
+
+	function generateIssuerDashboard(issuerData)
+	{
+		$("#issuerData").text(issuerData.issuerName);
+		$.map(issuerData.batchIds,function(batchId,index){
+				$.ajax({
+					url: "http:localhost:8080/viewBatchInfo/"+batchId, 
+					success: function(result){batchData = JSON.parse(result)}, 
+					statusCode : {200 : function(){
+						console.log(batchData);	
+						var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
+						newAddedDiv.attr('id',batchData.batchId);
+						$("#containerDisplayingBatches").prepend(newAddedDiv);
+
+					}}
+				});
+			}
+		);
 	}
