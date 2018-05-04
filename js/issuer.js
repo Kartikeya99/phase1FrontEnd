@@ -1,13 +1,16 @@
 
 $(document).ready(function(){
-		var issuerData;
 
 		$.ajax({
 				url: "http:localhost:8080/viewIssuerInfo/njnisarg", 
-				success: function(result){issuerData = JSON.parse(result)}, 
-				statusCode : {200 : function(){
+				success: function(result){
+					var issuerData = JSON.parse(result)
 					console.log(issuerData);
+					sessionStorage.setItem("issuerId",issuerData.issuerId);
 					generateIssuerDashboard(issuerData);
+				}, 
+				statusCode : {200 : function (argument) {
+					// body...
 				}}
 			});
 
@@ -22,7 +25,7 @@ $(document).ready(function(){
 /* ======================== index =================================== */
 
 var selDiv = "";
-		
+var imgFiles; var csvFiles;
 	document.addEventListener("DOMContentLoaded", init, false);
 	
 	function init() {
@@ -38,6 +41,7 @@ var selDiv = "";
 		
 		selImgDiv.innerHTML = "";
 		
+		imgFiles = e.target.files;
 		var files = e.target.files;
 		for(var i=0; i<files.length; i++) {
 			var f = files[i];
@@ -52,6 +56,7 @@ var selDiv = "";
 		
 		selCSVDiv.innerHTML = "";
 		
+		csvFiles = e.target.files;
 		var files = e.target.files;
 		for(var i=0; i<files.length; i++) {
 			var f = files[i];
@@ -60,33 +65,49 @@ var selDiv = "";
 		}
 	}
 
+	function redirect(element)
+	{
+		batchId = element.id;
+		sessionStorage.setItem("batchId",batchId);
+		window.location.replace("verify.html");
+	}
+
 	function issue(){
-		console.log("event triggered")
-		$.ajax({
-				url: "https://bdpfgo9tr7.execute-api.us-east-1.amazonaws.com/testing/cert-create/namanhr/batch1", 
-				success: function(result){console.log(result);}, 
-				statusCode : {200 : function(){window.location.replace("verify.html");}}
-			});
-		//window.location.replace("verify.html");
-		// .replace behaves as a http redirect protocol. .href as it behaves similar to clicking a link, but the user gets stuck into a neve rending back button loop 
-		var info1Val = $("#info1").val();
+		console.log("event triggered");
+
+		var title = $("#title").val();
+		var description = $("#description").val();
+		var numCerts = $("#numCerts").val();
+
+		$.post("localhost:8080/createBatch/",
+	    {
+	        title: title,
+	        description: description,
+	        batchId: "",
+	        issuerId: sessionStorage.issuerId,
+	        numCerts:numCerts
+	    },
+	    function(data, status){
+	        sessionStorage.setItem("newBatchId",(JSON.parse(data)).batchId);
+	    });
+
 		var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
 		$("#containerDisplayingBatches").prepend(newAddedDiv);
 	}
 
 	function generateIssuerDashboard(issuerData)
 	{
-		$("#issuerData").text(issuerData.issuerName);
+		$("#issuerName").append("<a href='#'>" +issuerData.issuerName + "<span class='sr-only'>(current)</span></a>");
 		$.map(issuerData.batchIds,function(batchId,index){
 				$.ajax({
 					url: "http:localhost:8080/viewBatchInfo/"+batchId, 
 					success: function(result){batchData = JSON.parse(result)}, 
 					statusCode : {200 : function(){
 						console.log(batchData);	
+
 						var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
 						newAddedDiv.attr('id',batchData.batchId);
 						$("#containerDisplayingBatches").prepend(newAddedDiv);
-
 					}}
 				});
 			}
