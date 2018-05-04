@@ -24,8 +24,33 @@ $(document).ready(function(){
 
 /* ======================== index =================================== */
 
-var selDiv = "";
-var imgFiles; var csvFiles;
+	function generateIssuerDashboard(issuerData)
+	{
+		$("#issuerName").append("<a href='#'>" +issuerData.issuerName + "<span class='sr-only'>(current)</span></a>");
+		$.map(issuerData.batchIds,function(batchId,index){
+				$.ajax({
+					url: "http:localhost:8080/viewBatchInfo/"+batchId,
+					success: function(result){batchData = JSON.parse(result)},
+					statusCode : {200 : function(){
+							console.log(batchData);
+
+							var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
+							newAddedDiv.attr('id',batchData.batchId);
+							$("#containerDisplayingBatches").prepend(newAddedDiv);
+						}}
+				});
+			}
+		);
+	}
+
+	function redirect(element)
+	{
+		batchId = element.id;
+		sessionStorage.setItem("batchId",batchId);
+		window.location.replace("verify.html");
+	}
+
+
 	document.addEventListener("DOMContentLoaded", init, false);
 	
 	function init() {
@@ -40,8 +65,7 @@ var imgFiles; var csvFiles;
 		if(!e.target.files) return;
 		
 		selImgDiv.innerHTML = "";
-		
-		imgFiles = e.target.files;
+
 		var files = e.target.files;
 		for(var i=0; i<files.length; i++) {
 			var f = files[i];
@@ -55,8 +79,7 @@ var imgFiles; var csvFiles;
 		if(!e.target.files) return;
 		
 		selCSVDiv.innerHTML = "";
-		
-		csvFiles = e.target.files;
+
 		var files = e.target.files;
 		for(var i=0; i<files.length; i++) {
 			var f = files[i];
@@ -65,51 +88,53 @@ var imgFiles; var csvFiles;
 		}
 	}
 
-	function redirect(element)
-	{
-		batchId = element.id;
-		sessionStorage.setItem("batchId",batchId);
-		window.location.replace("verify.html");
-	}
-
 	function issue(){
-		console.log("event triggered");
 
-		var title = $("#title").val();
-		var description = $("#description").val();
+		var title = String($("#title").val());
+		var description = String($("#description").val());
 		var numCerts = $("#numCerts").val();
+		var dataObj = JSON.stringify({"title":title,"description":description,"numCerts":parseInt(numCerts,10),"batchId":"","issuerId":sessionStorage.issuerId});
+		var headers = {"Content-Type":"application/json;charset=UTF-8"};
+		console.log(dataObj);
 
-		$.post("localhost:8080/createBatch/",
-	    {
-	        title: title,
-	        description: description,
-	        batchId: "",
-	        issuerId: sessionStorage.issuerId,
-	        numCerts:numCerts
-	    },
-	    function(data, status){
-	        sessionStorage.setItem("newBatchId",(JSON.parse(data)).batchId);
-	    });
+		$.ajax({
+		    type: 'POST',
+		    url: 'http://localhost:8080/createBatch',
+		    data: dataObj,
+		    headers:headers,
+		    success: function(resp) {
+				sessionStorage.setItem("newBatchId",resp.batchId);
 
-		var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
-		$("#containerDisplayingBatches").prepend(newAddedDiv);
-	}
+				/*var form = document.getElementById('fileUploadForm');
+				var fileSelect = document.getElementById('imageUpload');
+				var uploadButton = document.getElementById('issueButton');
+				var files = fileSelect.files;
+				var formData = new FormData();
+				for(var i = 0; i<files.length;i++)
+				{
+					var file = files[i];
+					formData.append(file);
+				}
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url: "http://localhost:8080/S3FileOperations/FileUpload/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    timeout: 600000,
+                    success: function (data) {
+                        console.log("SUCCESS : ", data);
 
-	function generateIssuerDashboard(issuerData)
-	{
-		$("#issuerName").append("<a href='#'>" +issuerData.issuerName + "<span class='sr-only'>(current)</span></a>");
-		$.map(issuerData.batchIds,function(batchId,index){
-				$.ajax({
-					url: "http:localhost:8080/viewBatchInfo/"+batchId, 
-					success: function(result){batchData = JSON.parse(result)}, 
-					statusCode : {200 : function(){
-						console.log(batchData);	
+                    },
+                    error: function (e) {
+                        console.log("ERROR : ", e);
+                    }
+                });*/
+		    }
+		  })	
 
-						var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
-						newAddedDiv.attr('id',batchData.batchId);
-						$("#containerDisplayingBatches").prepend(newAddedDiv);
-					}}
-				});
-			}
-		);
+		/*var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
+		$("#containerDisplayingBatches").prepend(newAddedDiv);*/
 	}

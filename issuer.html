@@ -86,7 +86,7 @@
 
 							<h3>Please Upload Image Files and CSV File.</h3>
 							<hr />
-							<form enctype="multipart/form-data" method="post">
+							<form enctype="multipart/form-data" method="post" id="fileUploadForm">
 								<div class="row">
 									<div class="form-group col-md-6">
 										<p class="help-block">Upload all the image files here : </p>
@@ -101,8 +101,12 @@
 										<input type="file" class="file-upload__input" id="CSVUpload" name="CSVUpload" placeholder="CSV File">
 										<div id="selectedCSVFiles">Uploaded CSV file is : </div>
 									</div>
+
+									<div class="form-group col-md-12">
+										<input type="submit" value="issue" id="issueButton" data-dismiss="modal" onclick="issue()">
+									</div>
 								</div>
-								<div class="row"><div class="btn btn-success btn-lg" id="issueButton" class="col-md-12" data-dismiss="modal" onclick="issue();" style="margin-left: 15px;">Issue</div></div>
+								<!--<div class="row"><div class="btn btn-success btn-lg" id="issueButton" class="col-md-12" data-dismiss="modal" onclick="issue();" style="margin-left: 15px;">Issue</div></div>-->
 							</form>
 
 						</div>
