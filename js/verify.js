@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 			//this map function is the code that adds those fields to the table
 			$.map(batchListData,function(batchListDataElement,index){
-				var newAddedField = $("<tr onclick=\"callImage(this)\" id="+ batchListDataElement.certName +" data-toggle=\"modal\" data-target=\"#certModal\">\n" +
+				var newAddedField = $("<tr onclick=\"callImage(this);\" id="+ batchListDataElement.certName +" data-toggle=\"modal\" data-target=\"#certModal\">\n" +
 					"\t\t\t\t\t\t<td>" + batchListDataElement.recipientId +"</td>\n" +
 					"\t\t\t\t\t\t<td>" + batchListDataElement.certName+ "</td>\n" +
 					"\t\t\t\t\t</tr>");
@@ -38,13 +38,18 @@ function callImage(element) {
 			var image = new Image(); // in the following three lines we create a new image object and add it inside the #certImage id in the dom
 			image.src = result.badge.image;
 			$("#certImg").append(image);
-			const cert = Verifier.Certificate.parseJson(result); // in the next two lines we are verifying the certificate inside the console.
-			console.log(cert);		
+					
 		}
 	});
 }
 
 // this is used to verify the certificates that have been uploaded
-function verifyCert(result){
-	
+function verifyCert(){
+	//const cert = Verifier.Certificate.parseJson(data); // in the next two lines we are verifying the certificate inside the console.
+	//console.log(cert);
+	setTimeOut(alertVerify(), 1500);
+}
+
+function alertVerify(){
+	alert("Verified!");
 }
