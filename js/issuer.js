@@ -7,6 +7,7 @@ $(document).ready(function(){
 					var issuerData = JSON.parse(result)
 					console.log(issuerData);
 					sessionStorage.setItem("issuerId",issuerData.issuerId);
+					sessionStorage.setItem("issuerName",issuerData.issuerName);
 					generateIssuerDashboard(issuerData);
 				}, 
 				statusCode : {200 : function (argument) {
