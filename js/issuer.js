@@ -1,66 +1,65 @@
 
 $(document).ready(function(){
-
-		$.ajax({
-				url: "http:localhost:8080/viewIssuerInfo/njnisarg", 
-				success: function(result){
-					var issuerData = JSON.parse(result)
-					console.log(issuerData);
-					sessionStorage.setItem("issuerId",issuerData.issuerId);
-					sessionStorage.setItem("issuerName",issuerData.issuerName);
-					generateIssuerDashboard(issuerData);
-				}, 
-				statusCode : {200 : function (argument) {
-					// body...
-				}}
-			});
-
-		/*$("#submitNewBatch").click(function(){
-			var info1Val = $("#info1").val();
-			var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
-			$("#containerDisplayingBatches").prepend(newAddedDiv);
-		});*/
-		
+	$.ajax({
+			url: "http:localhost:8080/viewIssuerInfo/njnisarg", // this call is made to get the information about the issuer 
+			success: function(result){
+				var issuerData = JSON.parse(result)
+				console.log(issuerData);
+				sessionStorage.setItem("issuerId",issuerData.issuerId);
+				sessionStorage.setItem("issuerName",issuerData.issuerName);
+				generateIssuerNavbar(issuerData);
+				generateIssuerDashboard(issuerData);
+			}, 
+			statusCode : {200 : function (argument) {
+				// body...
+			}}
+		});		
 });
 
-/* ======================== index =================================== */
+//this generates the issuer navbar according to the issuer data
+function generateIssuerNavbar(issuerData){
+	$("#issuerName").append("<a href='#'>" +issuerData.issuerName + "<span class='sr-only'>(current)</span></a>");
+}
 
-	function generateIssuerDashboard(issuerData)
-	{
-		$("#issuerName").append("<a href='#'>" +issuerData.issuerName + "<span class='sr-only'>(current)</span></a>");
-		$.map(issuerData.batchIds,function(batchId,index){
-				$.ajax({
-					url: "http:localhost:8080/viewBatchInfo/"+batchId,
-					success: function(result){batchData = JSON.parse(result)},
-					statusCode : {200 : function(){
-							console.log(batchData);
+//this generates the issuer dashboard according to the issuer data
+function generateIssuerDashboard(issuerData)
+{
+	//iterates through each and every batch id
+	$.map(issuerData.batchIds,function(batchId,index){
+			$.ajax({
+				url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
+				success: function(result){batchData = JSON.parse(result)},
+				statusCode : {200 : function(){
+						console.log(batchData);
 
-							var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
-							newAddedDiv.attr('id',batchData.batchId);
-							$("#containerDisplayingBatches").prepend(newAddedDiv);
-						}}
-				});
-			}
-		);
-	}
+						var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
+						newAddedDiv.attr('id',batchData.batchId);
+						$("#containerDisplayingBatches").prepend(newAddedDiv);
+					}
+				}
+			});
+		}
+	);
+}
 
-	function redirect(element)
-	{
-		batchId = element.id;
-		sessionStorage.setItem("batchId",batchId);
-		window.location.replace("verify.html");
-	}
+//the function redirects the user to the new page according to the card of the batch clicked
+function redirect(element){
+	batchId = element.id;
+	sessionStorage.setItem("batchId",batchId);
+	window.location.replace("verify.html");
+}
 
+//this is the code that adds multiple files as uploaded by the user to the browser and displays it to the screen
+document.addEventListener("DOMContentLoaded", init, false);
 
-	document.addEventListener("DOMContentLoaded", init, false);
-	
-	function init() {
-		document.querySelector('#imageUpload').addEventListener('change', handleImageFileSelect, false);
-		selImgDiv = document.querySelector("#selectedImageFiles");
-		document.querySelector('#CSVUpload').addEventListener('change', handleCSVFileSelect, false);
-		selCSVDiv = document.querySelector("#selectedCSVFiles");
-	}
-		
+function init() {
+	document.querySelector('#imageUpload').addEventListener('change', handleImageFileSelect, false);
+	selImgDiv = document.querySelector("#selectedImageFiles");
+	document.querySelector('#CSVUpload').addEventListener('change', handleCSVFileSelect, false);
+	selCSVDiv = document.querySelector("#selectedCSVFiles");
+}
+
+	//handles the image upload
 	function handleImageFileSelect(e) {
 		
 		if(!e.target.files) return;
@@ -75,6 +74,7 @@ $(document).ready(function(){
 		}
 	}
 
+	//handles the csv upload
 	function handleCSVFileSelect(e) {
 		
 		if(!e.target.files) return;
@@ -89,61 +89,58 @@ $(document).ready(function(){
 		}
 	}
 
-	function issue(){
+function issue(){
+	var title = String($("#title").val());
+	var description = String($("#description").val());
+	var numCerts = $("#numCerts").val();
+	var dataObj = JSON.stringify({"title":title,"description":description,"numCerts":parseInt(numCerts,10),"batchId":"","issuerId":sessionStorage.issuerId});
+	var headers = {"Content-Type":"application/json;charset=UTF-8"};
+	console.log(dataObj);
 
-		var title = String($("#title").val());
-		var description = String($("#description").val());
-		var numCerts = $("#numCerts").val();
-		var dataObj = JSON.stringify({"title":title,"description":description,"numCerts":parseInt(numCerts,10),"batchId":"","issuerId":sessionStorage.issuerId});
-		var headers = {"Content-Type":"application/json;charset=UTF-8"};
-		console.log(dataObj);
+	$.ajax({
+		type: 'POST',
+		url: 'http://localhost:8080/createBatch', //makes the api call for issuing the batch
+		data: dataObj,
+		headers:headers,
+		success: function(resp) {
+			sessionStorage.setItem("newBatchId",resp.batchId);
 
-		$.ajax({
-		    type: 'POST',
-		    url: 'http://localhost:8080/createBatch',
-		    data: dataObj,
-		    headers:headers,
-		    success: function(resp) {
-				sessionStorage.setItem("newBatchId",resp.batchId);
+			var formData = new FormData();
+			var imgFiles = document.forms['fileUploadForm'].imageUpload.files;
+			var CSVFiles = document.forms['fileUploadForm'].CSVUpload.files;
+			
+			for(var i = 0; i<imgFiles.length;i++){
+				formData.append("file",imgFiles[i]);
+			}
+			for(var i = 0; i<CSVFiles.length;i++){
+				formData.append("file",CSVFiles[i]);
+			}
 
-				var formData = new FormData();
-				var imgFiles = document.forms['fileUploadForm'].imageUpload.files;
-				var CSVFiles = document.forms['fileUploadForm'].CSVUpload.files;
-				
-				for(var i = 0; i<imgFiles.length;i++)
-				{
-					formData.append("file",imgFiles[i]);
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "http://localhost:8080/S3FileOperations/FileUpload/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId,
+				data: formData,
+				processData: false,
+				contentType: false,
+				cache: false,
+				timeout: 600000,
+				success: function (data){
+					console.log("SUCCESS : ", data);
+					$.ajax({
+						url: "http:localhost:8080/CertToolsTrigger/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId, 
+						success: function(result){
+							console.log("Done!");
+						}
+					});
+				},
+				error: function (e) {
+					console.log("ERROR : ", e);
 				}
-				for(var i = 0; i<CSVFiles.length;i++)
-				{
-					formData.append("file",CSVFiles[i]);
-				}
+			});
+		}
+	})	
 
-                $.ajax({
-                    type: "POST",
-                    enctype: 'multipart/form-data',
-                    url: "http://localhost:8080/S3FileOperations/FileUpload/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId,
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    cache: false,
-                    timeout: 600000,
-                    success: function (data) {
-                        console.log("SUCCESS : ", data);
-                        $.ajax({
-							url: "http:localhost:8080/CertToolsTrigger/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId, 
-							success: function(result){
-								console.log("Done!");
-							}
-						});
-                    },
-                    error: function (e) {
-                        console.log("ERROR : ", e);
-                    }
-                });
-		    }
-		  })	
-
-		/*var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
-		$("#containerDisplayingBatches").prepend(newAddedDiv);*/
-	}
+	/*var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
+	$("#containerDisplayingBatches").prepend(newAddedDiv);*/
+}
