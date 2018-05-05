@@ -44,9 +44,18 @@ function generateIssuerDashboard(issuerData)
 
 //the function redirects the user to the new page according to the card of the batch clicked
 function redirect(element){
-	batchId = element.id;
-	sessionStorage.setItem("batchId",batchId);
-	window.location.replace("verify.html");
+	var isSuccess = 0;
+	var batchId = element.id;
+	$.ajax({
+		url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
+		success: function(result){
+			batchData = JSON.parse(result);
+			if(batchData.batchStatus == 2){
+				sessionStorage.setItem("batchId",batchId);
+				window.location.replace("verify.html");
+			}
+		},
+	});
 }
 
 //this is the code that adds multiple files as uploaded by the user to the browser and displays it to the screen
@@ -141,6 +150,6 @@ function issue(){
 		}
 	})	
 
-	/*var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches'><h2>Batch #</h2><hr /><h3>Info related to Kartikeya</h3></div>");
-	$("#containerDisplayingBatches").prepend(newAddedDiv);*/
+	var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
+	$("#containerDisplayingBatches").prepend(newAddedDiv);
 }
