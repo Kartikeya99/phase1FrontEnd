@@ -39,12 +39,12 @@ function callImage(element) {
 			image.src = result.badge.image;
 			$("#certImg").append(image);
 			const cert = Verifier.Certificate.parseJson(result); // in the next two lines we are verifying the certificate inside the console.
-			console.log(cert)
+			console.log(cert);		
 		}
 	});
 }
 
 // this is used to verify the certificates that have been uploaded
-function verifyCert(){
-
+function verifyCert(result){
+	
 }
