@@ -47,7 +47,7 @@ function callImage(element) {
 function verifyCert(){
 	//const cert = Verifier.Certificate.parseJson(data); // in the next two lines we are verifying the certificate inside the console.
 	//console.log(cert);
-	setTimeOut(alertVerify(), 1500);
+	setTimeout(alertVerify(), 3500);
 }
 
 function alertVerify(){
