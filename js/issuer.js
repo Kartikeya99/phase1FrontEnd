@@ -105,16 +105,19 @@ $(document).ready(function(){
 		    success: function(resp) {
 				sessionStorage.setItem("newBatchId",resp.batchId);
 
-				/*var form = document.getElementById('fileUploadForm');
-				var fileSelect = document.getElementById('imageUpload');
-				var uploadButton = document.getElementById('issueButton');
-				var files = fileSelect.files;
 				var formData = new FormData();
-				for(var i = 0; i<files.length;i++)
+				var imgFiles = document.forms['fileUploadForm'].imageUpload.files;
+				var CSVFiles = document.forms['fileUploadForm'].CSVUpload.files;
+				
+				for(var i = 0; i<imgFiles.length;i++)
 				{
-					var file = files[i];
-					formData.append(file);
+					formData.append("file",imgFiles[i]);
 				}
+				for(var i = 0; i<CSVFiles.length;i++)
+				{
+					formData.append("file",CSVFiles[i]);
+				}
+
                 $.ajax({
                     type: "POST",
                     enctype: 'multipart/form-data',
@@ -126,12 +129,17 @@ $(document).ready(function(){
                     timeout: 600000,
                     success: function (data) {
                         console.log("SUCCESS : ", data);
-
+                        $.ajax({
+							url: "http:localhost:8080/CertToolsTrigger/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId, 
+							success: function(result){
+								console.log("Done!");
+							}
+						});
                     },
                     error: function (e) {
                         console.log("ERROR : ", e);
                     }
-                });*/
+                });
 		    }
 		  })	
 
