@@ -1,9 +1,7 @@
 $(document).ready(function(){
 
 	// from this function we dynamically add the username of the issuer 
-	function generateIssuerNavbar(){
-		$("#issuerName").append("<a href='#'>" +sessionStorage.issuerName + "<span class='sr-only'>(current)</span></a>");
-	}
+	generateIssuerNavbar();
 
 	// we are making the next call so as to show the certificates that have been issued inside the batch by the issuer
 	$.ajax({
@@ -23,6 +21,10 @@ $(document).ready(function(){
 		}
 	});
 });// document.ready method ends
+
+function generateIssuerNavbar(){
+		$("#issuerName").append("<a href='#'>" + sessionStorage.issuerName + "<span class='sr-only'>(current)</span></a>");
+}
 
 var data;
 
