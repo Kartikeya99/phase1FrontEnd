@@ -9,11 +9,10 @@ $(document).ready(function(){
 				sessionStorage.setItem("issuerName",issuerData.issuerName);
 				generateIssuerNavbar(issuerData);
 				generateIssuerDashboard(issuerData);
-			}, 
-			statusCode : {200 : function (argument) {
-				// body...
-			}}
-		});		
+			}
+		});	
+
+	fileUpload();	
 });
 
 //this generates the issuer navbar according to the issuer data
@@ -44,13 +43,12 @@ function generateIssuerDashboard(issuerData)
 
 //the function redirects the user to the new page according to the card of the batch clicked
 function redirect(element){
-	var isSuccess = 0;
 	var batchId = element.id;
 	$.ajax({
 		url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
 		success: function(result){
 			batchData = JSON.parse(result);
-			if(batchData.batchStatus == 2){
+			if(batchData.batchStatus >= 2){
 				sessionStorage.setItem("batchId",batchId);
 				window.location.replace("verify.html");
 			}
@@ -59,9 +57,8 @@ function redirect(element){
 }
 
 //this is the code that adds multiple files as uploaded by the user to the browser and displays it to the screen
-document.addEventListener("DOMContentLoaded", init, false);
 
-function init() {
+function fileUpload() {
 	document.querySelector('#imageUpload').addEventListener('change', handleImageFileSelect, false);
 	selImgDiv = document.querySelector("#selectedImageFiles");
 	document.querySelector('#CSVUpload').addEventListener('change', handleCSVFileSelect, false);
@@ -137,7 +134,7 @@ function issue(){
 				success: function (data){
 					console.log("SUCCESS : ", data);
 					$.ajax({
-						url: "http:localhost:8080/CertToolsTrigger/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId, 
+						url: "http:localhost:8080/CertProcessTrigger/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId, 
 						success: function(result){
 							console.log("Done!");
 						}
@@ -153,3 +150,8 @@ function issue(){
 	var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
 	$("#containerDisplayingBatches").prepend(newAddedDiv);
 }
+
+
+// All the elements to add dynamically on API calls
+
+var batchDisplayCard = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
