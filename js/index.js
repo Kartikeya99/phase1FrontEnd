@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 //this generates the issuer navbar according to the issuer data
 function generateIssuerNavbar(issuerData){
-	$("#issuerName").append("<a href='#'>" + issuerData.issuerName + "<span class='sr-only'>(current)</span></a>");
+	$("#issuerName").innerHTML = issuerData.issuerName;
 }
 
 //this generates the issuer dashboard according to the issuer data
