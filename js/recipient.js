@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
 	// from this function we dynamically add the username of the issuer 
-	generateIssuerNavbar(localStorage.issuerId);
+	generateRecipientNavbar(localStorage.recipientId);
 
 	// we are making the next call so as to show the certificates that have been issued inside the batch by the issuer
 	$.ajax({
-		url: baseUrl + "/issuerCertList/"+ localStorage.issuerId+'/'+sessionStorage.batchId,
+		url: baseUrl + "/recipientCertList/"+ localStorage.recipientId,
 		success: function(result){
 			var batchListData = result;
 			console.log(batchListData);
@@ -13,7 +13,7 @@ $(document).ready(function(){
 			//this map function is the code that adds those fields to the table
 			$.map(batchListData,function(batchListDataElement,index){
 				var newAddedField = $("<tr onclick=\"callImage(this);\" id="+ batchListDataElement.certName +" data-toggle=\"modal\" data-target=\"#certModal\">\n" +
-					"\t\t\t\t\t\t<td>" + batchListDataElement.recipientId +"</td>\n" +
+					"\t\t\t\t\t\t<td>" + batchListDataElement.issuerId +"</td>\n" +
 					"\t\t\t\t\t\t<td>" + batchListDataElement.certName+ "</td>\n" +
 					"\t\t\t\t\t</tr>");
 				$("#BatchInfoTable").append(newAddedField);
@@ -23,8 +23,8 @@ $(document).ready(function(){
 });// document.ready method ends
 
 var baseUrl = 'http://localhost:8080';
-function generateIssuerNavbar(issuerId){
-	$("#issuerId").prepend("<span>"+ issuerId +"</span>");
+function generateRecipientNavbar(recipientId){
+	$("#recipientId").prepend("<span>"+recipientId+"</span>");
 }
 
 var data;

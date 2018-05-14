@@ -40,7 +40,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<!-- <li class="active" id="issuerName"></li> -->
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle active" id="issuerName" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+							<a href="#" class="dropdown-toggle active" id="issuerId" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="index.html">Dashboard</a></li>
 								<li><a href="profile.html">Profile</a></li>
@@ -54,26 +54,35 @@
 		<div class="container">
 			<h1>Profile</h1>
 			<hr />
-			<form>
-				<div class="form-group">
-					<label for="emailAddress">Email address</label>
-					<input type="email" class="form-control" id="emailAddress" placeholder="Write Updated Email here">
+			<div class="row">
+				<div class="col-md-7" id="profileData">
+					<form>
+						<div class="form-group">
+							<label for="issuerName">Issuer Name</label>
+							<input type="email" class="form-control" id="issuerName" placeholder="Update Name">
+						</div>
+						<div class="form-group">
+							<label for="issuerUrl">Issuer Url</label>
+							<input type="text" class="form-control" id="issuerUrl" placeholder="Update URL">
+						</div>
+						<!--<div class="form-group">
+							<label for="exampleInputPassword1">Password</label>
+							<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Write updated password">
+						</div>-->
+						<!--<div class="form-group">
+							<p class="help-block">Click here to change your photo</p>
+						</div>-->
+					</form>
 				</div>
-				<div class="form-group">
-					<label for="userName">User Name</label>
-					<input type="text" class="form-control" id="userName" placeholder="Write Updated User Name here">
+
+				<div class="col-md-3 col-md-offset-2">
+					<img src="images/uploadImg.png" class="img-responsive" id="profilePic">
+					<h3> Upload your Image</h3>
+					<form>
+						<input type="file" id="inputPhoto">
+					</form>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
-					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Write updated password">
-				</div>
-				<div class="form-group">
-					<label for="exampleInputFile">Upload Your Photo</label>
-					<input type="file" id="inputPhoto">
-					<p class="help-block">Click here to change your photo</p>
-				</div>
-				<p class="btn btn-danger">Save</p>
-			</form>
+			</div>
 		</div>
 
 

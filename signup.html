@@ -58,17 +58,22 @@
 				<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 				<div class="checkbox">
 					<label>
-						<input type="checkbox" value="issuerYesNo"> If you are an issuer click here
-					</label>
+						<input type="checkbox" value="issuerYesNo" id="issuerYesNo"> Sign Up as an issuer
+					</label><br>
 					<label>
 						<input type="checkbox" value="remember-me"> Remember me
 					</label>
 				</div>
-				<a href="index.html"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></a>
+				<a href="#" onclick="signup();"><p class="btn btn-lg btn-primary btn-block">Sign up</p></a>
 			</form>
 		</div> <!-- /container -->
 
-
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+		<!-- Custom  Javascript -->
+		<script src="js/signup.js" type="text/javascript"></script>
 		
 	</body>
 </html>

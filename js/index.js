@@ -1,13 +1,21 @@
+var baseUrl = 'http://localhost:8080';
+
 $(document).ready(function(){
 	$.ajax({
-			url: "http:localhost:8080/viewIssuerInfo/njnisarg", // this call is made to get the information about the issuer 
+			url: baseUrl+'/viewIssuerInfo/'+ localStorage.issuerId , // this call is made to get the information about the issuer
 			success: function(result){
-				var issuerData = JSON.parse(result)
+				var issuerData = result;
 				console.log(issuerData);
-				sessionStorage.setItem("issuerId",issuerData.issuerId);
-				sessionStorage.setItem("issuerName",issuerData.issuerName);
-				generateIssuerNavbar(issuerData);
-				generateIssuerDashboard(issuerData);
+				if(issuerData.initialized === 0)
+				{
+					alert("You haven't initialized your profile information. We need it for issuing. This will redirect you to the profile page");
+					window.location.replace("profile.html");
+				}
+				else
+				{
+					generateIssuerNavbar(issuerData);
+					generateIssuerDashboard(issuerData);
+                }
 			}
 		});	
 
@@ -16,7 +24,7 @@ $(document).ready(function(){
 
 //this generates the issuer navbar according to the issuer data
 function generateIssuerNavbar(issuerData){
-	$("#issuerName").innerHTML = issuerData.issuerName;
+	$("#issuerId").prepend("<span>"+ issuerData.issuerId+"</span>");
 }
 
 //this generates the issuer dashboard according to the issuer data
@@ -25,8 +33,8 @@ function generateIssuerDashboard(issuerData)
 	//iterates through each and every batch id
 	$.map(issuerData.batchIds,function(batchId,index){
 			$.ajax({
-				url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
-				success: function(result){batchData = JSON.parse(result)},
+				url: "http:localhost:8080/viewBatchInfo/" + batchId, //makes this call to create the card of the batch contents.
+				success: function(result){batchData = result},
 				statusCode : {200 : function(){
 						console.log(batchData);
 
@@ -46,13 +54,13 @@ function redirect(element){
 	$.ajax({
 		url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
 		success: function(result){
-			batchData = JSON.parse(result);
-			if(batchData.batchStatus >= 2){
+			batchData = result;
+			if(batchData.batchStatus >= 3){
 				sessionStorage.setItem("batchId",batchId);
 				window.location.replace("verify.html");
 			}
-		},
-	});
+		}
+    });
 }
 
 //this is the code that adds multiple files as uploaded by the user to the browser and displays it to the screen
@@ -98,7 +106,7 @@ function issue(){
 	var title = String($("#title").val());
 	var description = String($("#description").val());
 	var numCerts = $("#numCerts").val();
-	var dataObj = JSON.stringify({"title":title,"description":description,"numCerts":parseInt(numCerts,10),"batchId":"","issuerId":sessionStorage.issuerId});
+	var dataObj = JSON.stringify({"title":title,"description":description,"numCerts":parseInt(numCerts,10),"batchId":"","issuerId":localStorage.issuerId});
 	var headers = {"Content-Type":"application/json;charset=UTF-8"};
 	console.log(dataObj);
 
@@ -108,7 +116,9 @@ function issue(){
 		data: dataObj,
 		headers:headers,
 		success: function(resp) {
-			sessionStorage.setItem("newBatchId",resp.batchId);
+
+			sessionStorage.setItem("newBatchId",resp);
+            console.log(sessionStorage.newBatchId);
 
 			var formData = new FormData();
 			var imgFiles = document.forms['fileUploadForm'].imageUpload.files;
@@ -124,7 +134,7 @@ function issue(){
 			$.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',
-				url: "http://localhost:8080/S3FileOperations/FileUpload/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId,
+				url: baseUrl + "/uploadRawData/"+localStorage.issuerId + '/' + sessionStorage.newBatchId,
 				data: formData,
 				processData: false,
 				contentType: false,
@@ -133,7 +143,7 @@ function issue(){
 				success: function (data){
 					console.log("SUCCESS : ", data);
 					$.ajax({
-						url: "http:localhost:8080/CertProcessTrigger/"+sessionStorage.issuerId+'/'+sessionStorage.newBatchId, 
+						url: baseUrl + "/certProcessTrigger/" + localStorage.issuerId+'/'+sessionStorage.newBatchId,
 						success: function(result){
 							console.log("Done!");
 						}
@@ -144,13 +154,8 @@ function issue(){
 				}
 			});
 		}
-	})	
+	});
 
 	var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
 	$("#containerDisplayingBatches").prepend(newAddedDiv);
 }
-
-
-// All the elements to add dynamically on API calls
-
-var batchDisplayCard = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
