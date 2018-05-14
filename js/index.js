@@ -159,3 +159,22 @@ function issue(){
 	var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
 	$("#containerDisplayingBatches").prepend(newAddedDiv);
 }
+
+function logOut()
+{
+    var i = localStorage.length, key;
+    while (i--)
+    {
+        key = localStorage.key(i);
+        localStorage.removeItem(key);
+    }
+
+    var j = sessionStorage.length, key2;
+    while(j--)
+	{
+		key2 = sessionStorage.key(j);
+		sessionStorage.removeItem(key);
+	}
+
+    window.location.replace("signin.html");
+}

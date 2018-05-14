@@ -92,6 +92,26 @@ function updateIssuerProfile()
 	}
 }
 
+function logOut()
+{
+    var i = localStorage.length, key;
+    while (i--)
+    {
+        key = localStorage.key(i);
+        localStorage.remove(key);
+    }
+
+    var j = sessionStorage.length, key2;
+    while(j--)
+    {
+        key2 = sessionStorage.key(j);
+        sessionStorage.remove(key);
+    }
+
+    window.location.replace("signin.html");
+}
+
+
 $(document).ready(function(){
     generateIssuerNavbar(localStorage.issuerId);
 

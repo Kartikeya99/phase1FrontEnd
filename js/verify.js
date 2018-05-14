@@ -52,3 +52,22 @@ function verifyCert(){
 	//console.log(cert);
 	setTimeout(alert("Verified!"), 2500);
 }
+
+function logOut()
+{
+    var i = localStorage.length, key;
+    while (i--)
+    {
+        key = localStorage.key(i);
+        localStorage.remove(key);
+    }
+
+    var j = sessionStorage.length, key2;
+    while(j--)
+    {
+        key2 = sessionStorage.key(j);
+        sessionStorage.remove(key);
+    }
+
+    window.location.replace("signin.html");
+}
