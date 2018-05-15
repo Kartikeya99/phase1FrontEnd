@@ -16,20 +16,30 @@ function signin() {
         data:data,
         headers:headers,
         success: function(result){
-            localStorage.setItem('token',result.token);
-            localStorage.setItem('type',result.type);
-            if(localStorage.type ==='issuer')
+            console.log(result);
+
+            if(result.token === "error")
             {
-                localStorage.setItem('issuerId',userId);
-                window.location.replace("index.html");
+                alert(result.type)
             }
             else
             {
-                localStorage.setItem('recipientId',userId);
-                window.location.replace("recipient.html");
+                localStorage.setItem('token',result.token);
+                localStorage.setItem('type',result.type);
+                if(localStorage.type ==='issuer')
+                {
+                    localStorage.setItem('issuerId',userId);
+                    window.location.replace("index.html");
+                }
+                else
+                {
+                    localStorage.setItem('recipientId',userId);
+                    window.location.replace("recipient.html");
+                }
             }
         }
-    });}
+    });
+}
 
 
 $(document).ready(function(){

@@ -1,13 +1,23 @@
 *{
 	font-family: 'Roboto', sans-serif;
 }
+body{
+	background-color: #efefef;
+}
 a{
 	text-decoration : none;
+}
+hr
+{
+	background-color: black;
+	color:black;
+	border-color: #bdbdbd;
 }
 
 /* =================== this is for the cards that are displaying the information about the batches that have already been issued =================== */
 .cardDisplayingBatches{
-	background-color: #eeeeee;
+
+	background-color: white;
 	border-radius: 5px;
 	margin: 5px;
 }

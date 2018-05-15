@@ -38,12 +38,13 @@ function generateIssuerDashboard(issuerData)
 				statusCode : {200 : function(){
 						console.log(batchData);
 
-						var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);'><h2>" + batchData.title + "</h2><hr /><h3>" + batchData.description + "</h3></div>");
+						var newAddedDiv = $("<div class='col-md-3 cardDisplayingBatches' onclick='redirect(this);'><h3><span style='color:orange'>Title</span> : " + batchData.title + "</h3><hr /><h4><span style='color:orange'> Description</span> : " + batchData.description + "</h4><h4><span style='color:orange'>Num of Certs</span> : "+ batchData.numCerts+"</h4></div>");
 						newAddedDiv.attr('id',batchData.batchId);
+						newAddedDiv.attr('style','margin-left:60px;');
 						$("#containerDisplayingBatches").prepend(newAddedDiv);
 					}
 				}
-			});
+			})
 		}
 	);
 }
@@ -54,10 +55,14 @@ function redirect(element){
 	$.ajax({
 		url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
 		success: function(result){
-			batchData = result;
+			var batchData = result;
 			if(batchData.batchStatus >= 3){
 				sessionStorage.setItem("batchId",batchId);
 				window.location.replace("verify.html");
+			}
+			else
+			{
+				console.log(batchData.batchStatus);
 			}
 		}
     });
@@ -117,8 +122,8 @@ function issue(){
 		headers:headers,
 		success: function(resp) {
 
-			sessionStorage.setItem("newBatchId",resp);
-            console.log(sessionStorage.newBatchId);
+			/*sessionStorage.setItem("newBatchId",resp);
+            console.log(sessionStorage.newBatchId);*/
 
 			var formData = new FormData();
 			var imgFiles = document.forms['fileUploadForm'].imageUpload.files;
@@ -156,8 +161,12 @@ function issue(){
 		}
 	});
 
-	var newAddedDiv = $("<div class='col-md-5 cardDisplayingBatches' onclick='redirect(this);' id=" + sessionStorage.newBatchId + "><h2>" + title + "</h2><hr /><h3>" + description + "</h3></div>");
-	$("#containerDisplayingBatches").prepend(newAddedDiv);
+    var newAddedDiv = $("<div class='col-md-3 cardDisplayingBatches' onclick='redirect(this);'><h3><span style='color:red'>Title</span> : " + title + "</h3><hr /><h4><span style='color:red'>Description</span> : " + description + "</h4><h4><span style='color:red'>	Num of Certs</span> : "+ numCerts+"</h4> <h4><span style='color:red'>Note</span> : The batch is in progress. Please Reload for viewing</h4></div>");
+/*
+    newAddedDiv.attr('id',sessionStorage.newBatchId);
+*/
+    newAddedDiv.attr('style','margin-left:60px;background-color:#cdcdcd');
+    $("#containerDisplayingBatches").prepend(newAddedDiv);
 }
 
 function logOut()

@@ -59,14 +59,14 @@ function logOut()
     while (i--)
     {
         key = localStorage.key(i);
-        localStorage.remove(key);
+        localStorage.removeItem(key);
     }
 
     var j = sessionStorage.length, key2;
     while(j--)
     {
         key2 = sessionStorage.key(j);
-        sessionStorage.remove(key);
+        sessionStorage.removeItem(key);
     }
 
     window.location.replace("signin.html");
