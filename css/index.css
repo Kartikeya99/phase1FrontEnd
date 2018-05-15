@@ -20,6 +20,7 @@ hr
 	background-color: white;
 	border-radius: 5px;
 	margin: 5px;
+	height:240px;
 }
 
 /* =================== this is for the plus floating icon hovering on the botton right of the screen =================== */
@@ -77,8 +78,4 @@ hr
 .imagesInsideModal{
 	height: 250px;
 	width: 250px;
-}
-
-.cardDisplayingBatches{
-	height:200px;
 }

@@ -40,8 +40,7 @@ function callImage(element) {
 			data = result;
 			var image = new Image(); // in the following three lines we create a new image object and add it inside the #certImage id in the dom
 			image.src = result.badge.image;
-			$("#certImg").append(image);
-					
+			$("#certImg").append("<img src=" + image.src + " height='500px' width='868px'>");					
 		}
 	});
 }

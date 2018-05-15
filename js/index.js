@@ -122,8 +122,8 @@ function issue(){
 		headers:headers,
 		success: function(resp) {
 
-			/*sessionStorage.setItem("newBatchId",resp);
-            console.log(sessionStorage.newBatchId);*/
+			sessionStorage.setItem("newBatchId",resp);
+            console.log(sessionStorage.newBatchId);
 
 			var formData = new FormData();
 			var imgFiles = document.forms['fileUploadForm'].imageUpload.files;
