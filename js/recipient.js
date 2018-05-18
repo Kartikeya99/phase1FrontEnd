@@ -23,6 +23,7 @@ $(document).ready(function(){
 });// document.ready method ends
 
 var baseUrl = 'http://localhost:8080';
+
 function generateRecipientNavbar(recipientId){
 	$("#recipientId").prepend("<span>"+recipientId+"</span>");
 }
