@@ -16,7 +16,7 @@ nav a{
 	margin-bottom: 0;
 }
 
-#mainRectangle {
+.mainRectangle {
 	border-radius: 5px;
 	background-color: #FFFFFF;
 	box-shadow: 0 0 10px 0 rgba(216,216,216,0.5);
@@ -123,4 +123,11 @@ input[type=email] {
 #finalStage{
 	margin-top: 7.4em;
 	margin-bottom: 7.4em;
+}
+
+#secondPage{
+	display: none;
+}
+#thirdPage{
+	display: none;
 }
