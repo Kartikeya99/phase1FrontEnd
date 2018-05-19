@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="44923e03-5ef1-4c86-ab5a-d0de9e79f34d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/issuer.html" />
-      <change beforePath="$PROJECT_DIR$/js/index.js" afterPath="$PROJECT_DIR$/js/issuer.js" />
-      <change beforePath="$PROJECT_DIR$/js/recipient.js" afterPath="$PROJECT_DIR$/js/recipient.js" />
-      <change beforePath="$PROJECT_DIR$/js/signin.js" afterPath="$PROJECT_DIR$/js/signin.js" />
-      <change beforePath="$PROJECT_DIR$/js/signup.js" afterPath="$PROJECT_DIR$/js/signup.js" />
-      <change beforePath="$PROJECT_DIR$/profile.html" afterPath="$PROJECT_DIR$/profile.html" />
-      <change beforePath="$PROJECT_DIR$/recipient.html" afterPath="$PROJECT_DIR$/recipient.html" />
-      <change beforePath="$PROJECT_DIR$/recipientHome.html" afterPath="$PROJECT_DIR$/recipientHome.html" />
-      <change beforePath="$PROJECT_DIR$/signup.html" afterPath="$PROJECT_DIR$/signup.html" />
-      <change beforePath="$PROJECT_DIR$/verify.html" afterPath="$PROJECT_DIR$/verify.html" />
-    </list>
+    <list default="true" id="44923e03-5ef1-4c86-ab5a-d0de9e79f34d" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -59,7 +47,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="issuer.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="issuer.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/issuer.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="552">
@@ -76,11 +64,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/js/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="issuer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/issuer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3414">
-              <caret line="258" column="5" lean-forward="false" selection-start-line="258" selection-start-column="5" selection-end-line="258" selection-end-column="5" />
+            <state relative-caret-position="800">
+              <caret line="93" column="3" lean-forward="true" selection-start-line="93" selection-start-column="3" selection-end-line="93" selection-end-column="3" />
               <folding>
                 <marker date="1526747038367" expanded="true" signature="3038:3050" ph="..." />
                 <marker date="1526747038367" expanded="true" signature="3118:3130" ph="..." />
@@ -110,6 +118,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -127,9 +136,7 @@
         <option value="$PROJECT_DIR$/verify.html" />
         <option value="$PROJECT_DIR$/css/signin.css" />
         <option value="$PROJECT_DIR$/signin.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/index.css" />
-        <option value="$PROJECT_DIR$/js/index.js" />
         <option value="$PROJECT_DIR$/profile.html" />
         <option value="$PROJECT_DIR$/js/profile.js" />
         <option value="$PROJECT_DIR$/js/verify.js" />
@@ -141,6 +148,8 @@
         <option value="$PROJECT_DIR$/js/recipient.js" />
         <option value="$PROJECT_DIR$/js/issuer.js" />
         <option value="$PROJECT_DIR$/issuer.html" />
+        <option value="$PROJECT_DIR$/js/index.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -184,11 +193,6 @@
             <path>
               <item name="phase1FrontEnd" type="b2602c69:ProjectViewProjectNode" />
               <item name="phase1FrontEnd" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="phase1FrontEnd" type="b2602c69:ProjectViewProjectNode" />
-              <item name="phase1FrontEnd" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -205,6 +209,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="jsx.switch.disabled" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -235,12 +240,12 @@
       <workItem from="1526316173433" duration="20632000" />
       <workItem from="1526338799785" duration="989000" />
       <workItem from="1526354190012" duration="4812000" />
-      <workItem from="1526735792014" duration="9216000" />
+      <workItem from="1526735792014" duration="9435000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49001000" />
+    <option name="totallyTimeSpent" value="49220000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -276,15 +281,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/verify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="936">
-          <caret line="52" column="1" lean-forward="true" selection-start-line="52" selection-start-column="1" selection-end-line="52" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/issuer.html" />
     <entry file="file://$PROJECT_DIR$/js/issuer.js" />
     <entry file="file://$PROJECT_DIR$/js/verifier.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -645,22 +641,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/issuer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3414">
-          <caret line="258" column="5" lean-forward="false" selection-start-line="258" selection-start-column="5" selection-end-line="258" selection-end-column="5" />
-          <folding>
-            <marker date="1526747038367" expanded="true" signature="3038:3050" ph="..." />
-            <marker date="1526747038367" expanded="true" signature="3118:3130" ph="..." />
-            <marker date="1526747038367" expanded="true" signature="3205:3217" ph="..." />
-            <marker date="1526747038367" expanded="true" signature="6748:6757" ph="..." />
-            <marker date="1526747038367" expanded="true" signature="6815:6824" ph="..." />
-            <marker date="1526747038367" expanded="true" signature="6888:6897" ph="..." />
-            <marker date="1526747038367" expanded="true" signature="6958:6967" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/issuer.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
@@ -673,6 +653,38 @@
             <marker date="1526747789416" expanded="false" signature="4258:4275" ph="..." />
             <marker date="1526747789416" expanded="false" signature="4696:4711" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/issuer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="800">
+          <caret line="93" column="3" lean-forward="true" selection-start-line="93" selection-start-column="3" selection-end-line="93" selection-end-column="3" />
+          <folding>
+            <marker date="1526747038367" expanded="true" signature="3038:3050" ph="..." />
+            <marker date="1526747038367" expanded="true" signature="3118:3130" ph="..." />
+            <marker date="1526747038367" expanded="true" signature="3205:3217" ph="..." />
+            <marker date="1526747038367" expanded="true" signature="6748:6757" ph="..." />
+            <marker date="1526747038367" expanded="true" signature="6815:6824" ph="..." />
+            <marker date="1526747038367" expanded="true" signature="6888:6897" ph="..." />
+            <marker date="1526747038367" expanded="true" signature="6958:6967" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
