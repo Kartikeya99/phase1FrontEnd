@@ -1,5 +1,5 @@
 /* var baseUrl = 'http://quzebackend-dev.us-east-1.elasticbeanstalk.com'; */
-var baseUrl = 'https://backend.quze.co';
+var baseUrl = 'http://localhost:8080';
 
 var type = '';
 
@@ -26,27 +26,37 @@ function signup() {
 		headers:headers,
 		success: function(result){
 			console.log(result);
-			// if(result.token === "User Exists")
-			// {
-			// 	alert("User Already Exists. Please try another User Name");
-			// }
-			// else
-			// {
-			// 	localStorage.setItem('token',result.token);
-			// 	localStorage.setItem('type',type);
-			// 	if(type==='issuer')
-			// 	{
-			// 		localStorage.setItem('issuerId',userId);
-			// 		window.location.replace("index.html");
-			// 	}
-			// 	else
-			// 	{
-			// 		localStorage.setItem('recipientId',userId);
-			// 		window.location.replace("recipient.html");
-			// 	}
-			// }
+			if(result.message === "User Exists")
+			{
+				alert("User Already Exists. Please try another User Name");
+			}
+			else
+			{
+				$.ajax({
+					url : baseUrl + '/login',
+					type : 'POST',
+					data : JSON.stringify({'userId':userId, 'password':password}),
+					headers : headers,
+					success : function(result, textStatus, request){
+						console.log(request.getResponseHeader("authorization"));
+						// localStorage.setItem('token',request.getResponseHeader("authorization"));
+						// localStorage.setItem('type',type);
+						// if(type==='issuer')
+						// {
+						// 	localStorage.setItem('issuerId',userId);
+						// 	window.location.replace("index.html");
+						// }
+						// else
+						// {
+						// 	localStorage.setItem('recipientId',userId);
+						// 	window.location.replace("recipient.html");
+						// }						
+					}
+				});
+			}
 		}
-	});}
+	});
+}
 
 
 $(document).ready(function(){
