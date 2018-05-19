@@ -1,4 +1,4 @@
-var baseUrl = 'http://localhost:8080';
+var baseUrl = 'https://backend.quze.co';
 
 $(document).ready(function(){
 

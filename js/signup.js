@@ -34,7 +34,7 @@ $("#internalBackBtn").click(function () {
 });
 
 
-var baseUrl = 'http://localhost:8080';
+var baseUrl = 'https://backend.quze.co';
 
 var type = '';
 

@@ -29,7 +29,7 @@ $(document).ready(function(){
 });
 
 
-var baseUrl = 'http:localhost:8080';
+var baseUrl = 'https://backend.quze.co';
 
 function signin() {
     var userId = $("#inputUserName").val();
