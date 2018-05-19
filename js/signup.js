@@ -29,8 +29,9 @@ $(document).ready(function(){
 });
 
 $("#internalBackBtn").click(function () {
-    $("#firstPage").css("display", "block");
-    $("#secondPage").css("display", "none");
+	$("#firstPage").css("display", "block");
+	$("#secondPage").css("display", "none");
+	$("#internalBackBtn").css("display", "none");
 });
 
 
@@ -105,5 +106,6 @@ function typeOfLogin(clicked_id){
 
 	$("#firstPage").css("display", "none");
 	$("#secondPage").css("display", "block");
+	$("#internalBackBtn").css("display", "block");
 }
 

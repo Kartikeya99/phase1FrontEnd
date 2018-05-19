@@ -131,3 +131,12 @@ input[type=email] {
 #thirdPage{
 	display: none;
 }
+
+#internalBackBtn{
+	display: none;
+	height: 40px;
+	width: 40px;
+	border-radius: 30px;
+	background-color: black;
+	color: white;
+}
