@@ -1,4 +1,57 @@
-/* var baseUrl = 'http://quzebackend-dev.us-east-1.elasticbeanstalk.com'; */
+$(document).ready(function(){
+
+    if(localStorage.getItem("type")==="recipient" || localStorage.getItem("type")==="issuer" && localStorage.getItem("token") !== "")
+    {
+        if(localStorage.getItem("type")==="recipient" && localStorage.getItem("recipientId") !== "")
+        {
+            window.location.replace("recipient.html");
+        }
+        else if(localStorage.getItem("type")==="issuer" && localStorage.getItem("issuerId") !== "")
+        {
+            window.location.replace("issuer.html");
+        }
+        else
+        {
+            var i = localStorage.length;
+            var key;
+            while (i--)
+            {
+                key = localStorage.key(i);
+                localStorage.removeItem(key);
+            }
+
+            var j = sessionStorage.length;
+            var key2;
+            while(j--)
+            {
+                key2 = sessionStorage.key(j);
+                sessionStorage.removeItem(key2);
+            }
+        }
+
+    }
+    else
+    {
+        var i = localStorage.length;
+        var key;
+        while (i--)
+        {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+        var key2;
+        while(j--)
+        {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+    }
+
+});
+
+
 var baseUrl = 'http:localhost:8080';
 
 function signin() {
@@ -15,33 +68,37 @@ function signin() {
         type:"POST",
         data:data,
         headers:headers,
-        success: function(result){
-            console.log(result);
+        error: function (err) {
+            alert("Please try again with correct credentials");
+        }
+    }).done(function (data,textStatus,request) {
+        localStorage.setItem('token',request.getResponseHeader("authorization"));
 
-            if(result.token === "error")
-            {
-                alert(result.type)
-            }
-            else
-            {
-                localStorage.setItem('token',result.token);
-                localStorage.setItem('type',result.type);
-                if(localStorage.type ==='issuer')
+        headers = {'Content-Type':'application/json;charset=utf8','Authorization':localStorage.getItem("token")};
+        $.ajax({
+            url: baseUrl + '/getUserInfo/'+userId,
+            type:"GET",
+            headers: headers,
+            success : function (data) {
+                if(data.type === "issuer")
                 {
-                    localStorage.setItem('issuerId',userId);
-                    window.location.replace("index.html");
+                    localStorage.setItem("type",data.type);
+                    localStorage.setItem("issuerId",userId);
+                    window.location.replace("issuer.html");
                 }
-                else
+                else if(data.type === "recipient")
                 {
-                    localStorage.setItem('recipientId',userId);
+                    localStorage.setItem("type",data.type);
+                    localStorage.setItem("recipientId",userId);
                     window.location.replace("recipient.html");
                 }
+                else if(data.userId === "error")
+                {
+                    alert(data.type);
+                }
+
             }
-        }
+        });
     });
 }
 
-
-$(document).ready(function(){
-
-});

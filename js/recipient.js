@@ -1,10 +1,82 @@
+var baseUrl = 'http://localhost:8080';
+
 $(document).ready(function(){
+
+	if(!(localStorage.getItem("type") === "recipient"))
+	{
+		if(localStorage.getItem("type") === "issuer")
+		{
+			window.location.replace("index.html");
+		}
+		else {
+            var i = localStorage.length;
+            var key;
+            while (i--)
+            {
+                key = localStorage.key(i);
+                localStorage.removeItem(key);
+            }
+
+            var j = sessionStorage.length;
+            var key2;
+            while(j--)
+            {
+                key2 = sessionStorage.key(j);
+                sessionStorage.removeItem(key2);
+            }
+
+            window.location.replace("signin.html");
+		}
+	}
+	if(localStorage.getItem("recipientId")==="")
+	{
+        var i = localStorage.length;
+        var key;
+        while (i--)
+        {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+        var key2;
+        while(j--)
+        {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+
+        window.location.replace("signin.html");
+
+    }
+	if(localStorage.getItem("token")==="")
+	{
+        var i = localStorage.length;
+        var key;
+        while (i--)
+        {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+        var key2;
+        while(j--)
+        {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+
+        window.location.replace("signin.html");
+
+    }
+
 
 	// from this function we dynamically add the username of the issuer 
 	generateRecipientNavbar(localStorage.recipientId);
 
 	// we are making the next call so as to show the certificates that have been issued inside the batch by the issuer
-	$.ajax({
+	/*$.ajax({
 		url: baseUrl + "/recipientCertList/"+ localStorage.recipientId,
 		success: function(result){
 			var batchListData = result;
@@ -19,10 +91,8 @@ $(document).ready(function(){
 				$("#BatchInfoTable").append(newAddedField);
 			});
 		}
-	});
+	});*/
 });// document.ready method ends
-
-var baseUrl = 'http://localhost:8080';
 
 function generateRecipientNavbar(recipientId){
 	$("#recipientId").prepend("<span>"+recipientId+"</span>");
@@ -49,9 +119,7 @@ function callImage(element) {
 
 // this is used to verify the certificates that have been uploaded
 function verifyCert(){
-	//const cert = Verifier.Certificate.parseJson(data); // in the next two lines we are verifying the certificate inside the console.
-	//console.log(cert);
-	setTimeout(alert("Verified!"), 2500);
+
 }
 
 function logOut()

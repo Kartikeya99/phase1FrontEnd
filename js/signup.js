@@ -1,4 +1,62 @@
-/* var baseUrl = 'http://quzebackend-dev.us-east-1.elasticbeanstalk.com'; */
+$(document).ready(function(){
+
+	if(localStorage.getItem("type")==="recipient" || localStorage.getItem("type")==="issuer" && localStorage.getItem("token") !== "")
+	{
+		if(localStorage.getItem("type")==="recipient" && localStorage.getItem("recipientId") !== "")
+		{
+			window.location.replace("recipient.html");
+		}
+		else if(localStorage.getItem("type")==="issuer" && localStorage.getItem("issuerId") !== "")
+		{
+			window.location.replace("issuer.html");
+		}
+		else
+		{
+            var i = localStorage.length;
+            var key;
+            while (i--)
+            {
+                key = localStorage.key(i);
+                localStorage.removeItem(key);
+            }
+
+            var j = sessionStorage.length;
+            var key2;
+            while(j--)
+            {
+                key2 = sessionStorage.key(j);
+                sessionStorage.removeItem(key2);
+            }
+		}
+
+	}
+	else
+	{
+        var i = localStorage.length;
+		var key;
+        while (i--)
+        {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+		var key2;
+        while(j--)
+        {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+	}
+
+});
+
+$("#internalBackBtn").click(function () {
+    $("#firstPage").css("display", "block");
+    $("#secondPage").css("display", "none");
+});
+
+
 var baseUrl = 'http://localhost:8080';
 
 var type = '';
@@ -20,57 +78,53 @@ function signup() {
 	var headers = {'Content-Type':'application/json;charset=utf8'};
 
 	$.ajax({
-		url: baseUrl+'/register',
-		type:"POST",
-		data:data,
-		headers:headers,
-		success: function(result){
-			console.log(result);
-			if(result.message === "User Exists")
-			{
-				alert("User Already Exists. Please try another User Name");
-			}
-			else
-			{
-				$.ajax({
-					url : baseUrl + '/login',
-					type : 'POST',
-					data : JSON.stringify({'userId':userId, 'password':password}),
-					headers : headers,
-					success : function(result, textStatus, request){
-						console.log(request.getResponseHeader("authorization"));
-						// localStorage.setItem('token',request.getResponseHeader("authorization"));
-						// localStorage.setItem('type',type);
-						// if(type==='issuer')
-						// {
-						// 	localStorage.setItem('issuerId',userId);
-						// 	window.location.replace("index.html");
-						// }
-						// else
-						// {
-						// 	localStorage.setItem('recipientId',userId);
-						// 	window.location.replace("recipient.html");
-						// }						
-					}
-				});
-			}
-		}
-	});
+        url: baseUrl + '/register',
+        type: "POST",
+        data: data,
+        headers: headers,
+        success: function (result) {
+            if (result.message === "User Exists") {
+                alert("User Already Exists. Please try another User Name");
+            }
+            else {
+                $.ajax({
+                    url: baseUrl + '/login',
+                    type: 'POST',
+                    data: JSON.stringify({'userId': userId, 'password': password}),
+                    headers: headers
+                }).done(function (data, textStatus, request) {
+                    localStorage.setItem('token',request.getResponseHeader("authorization"));
+                    localStorage.setItem('type',type);
+                    if(type==='issuer')
+                    {
+                    	localStorage.setItem('issuerId',userId);
+                    	window.location.replace("issuer.html");
+                    }
+                    else
+                    {
+                    	localStorage.setItem('recipientId',userId);
+                    	window.location.replace("recipient.html");
+                    }
+                });
+            }
+        }
+    })
 }
 
 
-$(document).ready(function(){
-
-});
-
-
 function typeOfLogin(clicked_id){
-	if (clicked_id === 'studentLoginButton')
-		type = 'recipient';
-	else if (clicked_id === 'institutionLoginButton')
-		type = 'issuer';
-	else
-		type = 'employer';
+	if (clicked_id === 'studentLoginButton') {
+        type = 'recipient';
+        $("#secondPageHeading").text("STUDENT");
+    }
+	else if (clicked_id === 'institutionLoginButton') {
+        type = 'issuer';
+        $("#secondPageHeading").text("INSTITUTION");
+    }
+	else {
+        type = 'employer';
+        $("#secondPageHeading").text("EMPLOYER");
+    }
 
 	$("#firstPage").css("display", "none");
 	$("#secondPage").css("display", "block");

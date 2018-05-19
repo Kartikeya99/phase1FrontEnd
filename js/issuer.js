@@ -1,7 +1,78 @@
 var baseUrl = 'http://localhost:8080';
 
 $(document).ready(function(){
-	$.ajax({
+
+    if(!(localStorage.getItem("type") === "issuer"))
+    {
+        if(localStorage.getItem("type") === "recipient")
+        {
+            window.location.replace("recipient.html");
+        }
+        else {
+            var i = localStorage.length;
+            var key;
+            while (i--)
+            {
+                key = localStorage.key(i);
+                localStorage.removeItem(key);
+            }
+
+            var j = sessionStorage.length;
+            var key2;
+            while(j--)
+            {
+                key2 = sessionStorage.key(j);
+                sessionStorage.removeItem(key2);
+            }
+
+            window.location.replace("signin.html");
+        }
+    }
+    if(localStorage.getItem("issuerId")==="")
+    {
+        var i = localStorage.length;
+        var key;
+        while (i--)
+        {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+        var key2;
+        while(j--)
+        {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+
+        window.location.replace("signin.html");
+
+    }
+    if(localStorage.getItem("token")==="")
+    {
+        var i = localStorage.length;
+        var key;
+        while (i--)
+        {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+        var key2;
+        while(j--)
+        {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+
+        window.location.replace("signin.html");
+
+    }
+
+
+	/*$.ajax({
 			url: baseUrl+'/viewIssuerInfo/'+ localStorage.issuerId , // this call is made to get the information about the issuer
 			success: function(result){
 				var issuerData = result;
@@ -17,7 +88,7 @@ $(document).ready(function(){
 					generateIssuerDashboard(issuerData);
                 }
 			}
-		});	
+		});*/
 
 	fileUpload();	
 });
@@ -171,19 +242,20 @@ function issue(){
 
 function logOut()
 {
-    var i = localStorage.length, key;
+    var i = localStorage.length;
+    var key;
     while (i--)
     {
         key = localStorage.key(i);
         localStorage.removeItem(key);
     }
 
-    var j = sessionStorage.length, key2;
+    var j = sessionStorage.length;
+    var key2;
     while(j--)
-	{
-		key2 = sessionStorage.key(j);
-		sessionStorage.removeItem(key);
-	}
-
+    {
+        key2 = sessionStorage.key(j);
+        sessionStorage.removeItem(key2);
+    }
     window.location.replace("signin.html");
 }

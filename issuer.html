@@ -24,9 +24,9 @@
 
 	<body>
 
-		<nav class="navbar navbar-inverse" style="border-radius: 0;">
+	<!--	<nav class="navbar navbar-inverse" style="border-radius: 0;">
 			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
+				&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;
 				<div class="navbar-header">
 					  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
@@ -34,25 +34,25 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					  </button>
-					<a class="navbar-brand" href="index.html">QUZE</a>
+					<a class="navbar-brand" href="issuer.html">QUZE</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
-						<!-- <li class="active" id="issuerName"></li> -->
+						&lt;!&ndash; <li class="active" id="issuerName"></li> &ndash;&gt;
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle active" id="issuerId" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="index.html" style="color:white;background-color: blue;padding:10px;">Dashboard</a></li>
+								<li><a href="issuer.html" style="color:white;background-color: blue;padding:10px;">Dashboard</a></li>
 								<li><a href="profile.html" style="padding:10px;">Profile</a></li>
 								<li><a href="#" style="padding:10px;" onclick="logOut();">Log Out</a></li>
 							</ul>
 						</li>
 					</ul>
-				</div><!-- /.navbar-collapse -->
-			</div><!-- /.container-fluid -->
-		</nav>
+				</div>&lt;!&ndash; /.navbar-collapse &ndash;&gt;
+			</div>&lt;!&ndash; /.container-fluid &ndash;&gt;
+		</nav>-->
 
-		<div class="container">
+		<!--<div class="container">
 			<h1>Batches Issued</h1><hr/>
 			<div id="containerDisplayingBatches" class="row">
 				
@@ -60,9 +60,9 @@
 		</div>
 
 		<div id="floater">
-			<!-- <button type="button" class="float" data-toggle="modal" data-target="#myModal">
+			&lt;!&ndash; <button type="button" class="float" data-toggle="modal" data-target="#myModal">
 				<i class="glyphicon glyphicon-plus my-float"></i>
-			</button> -->
+			</button> &ndash;&gt;
 			<a href="#" class="float" data-toggle="modal" data-target="#myModal" style="background-color: blue">
 				<i class="glyphicon glyphicon-plus my-float"></i>
 			</a>
@@ -112,7 +112,7 @@
 										<input type="submit" value="issue" id="issueButton" data-dismiss="modal" onclick="issue()">
 									</div>
 								</div>
-								<!--<div class="row"><div class="btn btn-success btn-lg" id="issueButton" class="col-md-12" data-dismiss="modal" onclick="issue();" style="margin-left: 15px;">Issue</div></div>-->
+								&lt;!&ndash;<div class="row"><div class="btn btn-success btn-lg" id="issueButton" class="col-md-12" data-dismiss="modal" onclick="issue();" style="margin-left: 15px;">Issue</div></div>&ndash;&gt;
 							</form>
 
 						</div>
@@ -120,19 +120,24 @@
 				</div>
 			</div>
 
+		</div>-->
+
+		<div class="container">
+			<!--<img src="images/underConstruction.png">-->
+			<br><br><br><br><br><br><br><br><br><br><br>
+			<h1> This Page is under construction! Please visit us next time! But since you logged in to test this, you need to logout. Please click on the button below!</h1>
+			<p class="btn btn-danger btn-lg center-block" onclick="logOut();">Log out</p>
 		</div>
 
 
 
-
-		
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 		<!-- Custom  Javascript -->
-		<script type="text/javascript" src="./js/index.js"></script>
+		<script type="text/javascript" src="js/issuer.js"></script>
 
 	</body>
 
