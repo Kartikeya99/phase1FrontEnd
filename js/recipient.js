@@ -28,7 +28,7 @@ $(document).ready(function(){
         window.location.replace("signin.html");
     }
 
-
+    $("#welcomeRecipientHomeUserName").text(localStorage.recipientId);
 	// from this function we dynamically add the username of the issuer 
 	generateRecipientNavbar(localStorage.recipientId);
 
