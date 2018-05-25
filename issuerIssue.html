@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>QUZE | Recipient Home</title>
+
+	<link href="css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap -->
+	<link rel="stylesheet" type="text/css" href="./css/issuerIssue.css">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+	<nav class="navbar">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style="color: black;">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				<a href="issuer.html"><img src="images/img3.png" id="navbarImage1"></a>
+			</div>
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav" id="menu">
+					<li><a href="issuerHome.html" id="issuerHome">HOME</a></li>
+					<li class="active"><a href="issuerIssue.html" id="issuerLearn">ISSUE</a></li>
+					<li><a href="issuerWallet.html" id="issuerWallet">WALLET</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<!-- <li class="active" id="issuerName"></li> -->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle active" id="recipientId" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><!-- <img src="images/placeholder.png" id="navbarImage2"> --></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" style="color:black;padding:10px;">ACCOUNT</a></li>
+							<li><a href="#" style="color:black;padding:10px;">SETTINGS</a></li>
+							<li><a href="#" style="color:black;padding:10px;">HELP</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#" style="padding:10px;" onclick="logOut();">Log Out</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<div class="container">	
+		<div class="row">
+			<h4 class="typeOfCertificate">BATCHES</h4>
+			<div class="certificate col-md-12" data-toggle="modal" data-target="#certModal">
+				<div class="infoOfCertificate">
+					<p>Test Batch 1</p>
+					<p>B.S Computer Science class of 2015</p>
+					<p>10 students</p>	
+				</div>	
+				<span class="glyphicon glyphicon-ok certificateGlyphs" style="color: green;"></span>	
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="certificate col-md-12" data-toggle="modal" data-target="#certModal">
+				<div class="infoOfCertificate">
+					<p>Test Batch 1</p>
+					<p>B.S Electrical class of 2015</p>
+					<p>10 students</p>
+				</div>
+				<span class="glyphicon glyphicon-ok certificateGlyphs" style="color: green;"></span>
+			</div>
+		</div>
+	</div>
+
+	<a href="#" class="float" data-toggle="modal" data-target="#myModal">
+		<i class="glyphicon glyphicon-plus my-float"></i>
+	</a>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="js/bootstrap.min.js"></script><!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/issuerIssue.js"></script>
+
+</body>
+</html>
