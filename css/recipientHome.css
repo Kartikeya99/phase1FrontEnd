@@ -11,7 +11,7 @@ p{
 	border-radius: 0px;
 	background-color: white;
 	color: #6E6E6E;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #6E6E6E;
 	font-size: 1.2em;
 }
 
@@ -45,7 +45,21 @@ p{
 #menu{
 	position: relative;
 	left: 50%;
-	margin-left: -133px;
+	margin-left: -231px;
+}
+
+#recipientHome{
+	padding-left: 50px;
+	padding-right: 50px;
+	color: black;
+}
+#recipientLearn{
+	padding-left: 50px;
+	padding-right: 50px;
+}
+#recipientWallet{
+	padding-left: 50px;
+	padding-right: 50px;
 }
 
 /* ============== certificates =================== */

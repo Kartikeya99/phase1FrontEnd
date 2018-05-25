@@ -4,6 +4,9 @@ body{
 p{
 	margin: 0px;
 }
+.glyphicon{
+	font-size: 30px;
+}
 
 /* ========== navbar ============= */
 
@@ -11,7 +14,7 @@ p{
 	border-radius: 0px;
 	background-color: white;
 	color: #6E6E6E;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #6E6E6E;
 	font-size: 1.2em;
 }
 
@@ -46,9 +49,22 @@ p{
 #menu{
 	position: relative;
 	left: 50%;
-	margin-left: -133px;
+	margin-left: -231px;
 }
 
+#recipientHome{
+	padding-left: 50px;
+	padding-right: 50px;
+}
+#recipientLearn{
+	padding-left: 50px;
+	padding-right: 50px;
+}
+#recipientWallet{
+	padding-left: 50px;
+	padding-right: 50px;
+	color: black;
+}
 /* ============== certificates =================== */
 .row{
 	margin-bottom: 1.3em;
@@ -74,7 +90,11 @@ p{
 	font-size: 18px;
 	position: relative;
 	float: left;
-	margin-left: 1em;
+	margin-left: 2em;
 	color: #6E6E6E;
 	margin-top: 34px; 
+}
+.glyphicon.certificateGlyphs{
+	margin-top: 55px;
+
 }
