@@ -79,9 +79,71 @@
 		</div>
 	</div>
 
-	<a href="#" class="float" data-toggle="modal" data-target="#myModal">
-		<i class="glyphicon glyphicon-plus my-float"></i>
+	<a href="#" class="float" onclick="createBatchButton();">
+		<i class="glyphicon glyphicon-plus my-float" id="createBatch"></i>
+		<i class="glyphicon glyphicon-remove my-float" id="removeModal"></i>
 	</a>
+	<div class="container">
+		<div class="row">
+			<div id="createBatchButtonModal" class="col-sm-2">
+				<a href="#" ><div class="createBatchButtonOptions text-center" onclick="batchCreationDialog();">CREATE BATCH</div></a>
+				<a href="#" ><div class="createBatchButtonOptions text-center">EDIT BATCH</div></a>
+				<a href="#" ><div class="createBatchButtonOptions text-center">DELETE BATCH</div></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="container" id="batchCreationDialogModal">
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" onclick="closeBatchCreateDialog();"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">CREATE A NEW BATCH</h4>
+					</div>
+					<div class="modal-body">
+						<form enctype="multipart/form-data" method="post" id="fileUploadForm" name="fileUploadForm">
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="title">Title</label>
+									<input type="text" class="form-control" id="title" placeholder="Title">
+								</div>
+								<div class="form-group col-md-4 col-md-offset-1">
+									<label for="CSVUpload" class="file-upload__label" style="max-width: 8em;">Upload CSV</label>
+									<input type="file" class="file-upload__input" id="CSVUpload" name="CSVUpload" placeholder="CSV File">
+									<div id="selectedCSVFiles">Uploaded CSV file is : </div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="form-group col-md-6">
+									<label for="numCerts">Number of Students</label>
+									<input type="number" class="form-control" id="numCerts" placeholder="100">
+								</div>
+								<div class="form-group col-md-4 col-md-offset-1">
+									<label for="imageUpload" class="file-upload__label" style="max-width: 9.5em;">Upload Images</label>
+									<input type="file" id="imageUpload" name="imageUpload" class="file-upload__input" placeholder="Certificate Image" multiple>
+									<div id="selectedImageFiles">Uploaded Images are : </div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<label for="description">Description</label>
+								<textarea class="form-control" rows="5" id="description" placeholder="Description"></textarea>
+							</div>							
+							<div class="row">
+								<!-- <div class="form-group col-md-12">
+									<input type="submit" value="ISSUE" id="issueButton" data-dismiss="modal" onclick="issue()">
+								</div> -->
+								<div class="row">
+									<div class="btn btn-lg" id="issueButton" class="col-md-12" data-dismiss="modal" onclick="issue();" style="margin-left: 280px; background-color: black; color: white; border-radius: 0px;">Issue</div>
+								</div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script><!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/bootstrap.min.js"></script><!-- Include all compiled plugins (below), or include individual files as needed -->

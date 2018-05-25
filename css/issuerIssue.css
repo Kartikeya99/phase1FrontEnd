@@ -7,6 +7,9 @@ p{
 .glyphicon{
 	font-size: 25px;
 }
+a, a:hover{
+	text-decoration: none;
+}
 
 /* ========== navbar ============= */
 
@@ -111,4 +114,37 @@ p{
 .my-float{
 	margin-top:16px;
 	color: #FFF;
+}
+
+/* ============= floating action button clicked menu ================== */
+
+#createBatchButtonModal{
+	position: fixed;
+	bottom: 110px;
+	right: 50px;
+	display: none;
+}
+
+.createBatchButtonOptions{
+	background-color: black;
+	color: white;
+	font-size: 1em;
+	margin-bottom: 12px;
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
+#removeModal{
+	display: none;
+}
+
+/* =========== batch creation dialog modal ============== */
+
+#batchCreationDialogModal{
+	position: fixed;
+	top: 40px;
+	width: 50%;
+	left: 50%;
+	margin-left: -25%;
+	display: none;
 }
