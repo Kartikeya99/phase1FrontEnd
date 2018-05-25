@@ -6,6 +6,7 @@ $(document).ready(function(){
 	// we are making the next call so as to show the certificates that have been issued inside the batch by the issuer
 	$.ajax({
 		url: baseUrl + "/issuerCertList/"+ localStorage.issuerId+'/'+sessionStorage.batchId,
+		headers:{'Authorization':localStorage.token},
 		success: function(result){
 			var batchListData = result;
 			console.log(batchListData);
@@ -35,6 +36,7 @@ function callImage(element) {
 	while (myNode.firstChild) { myNode.removeChild(myNode.firstChild); } // we do this to remove the previously stored image and then append the new image that we got from the api call down below
 	$.ajax({
 		url: baseUrl+"/downloadCert/"+element.id,
+		headers:{'Authorization':localStorage.token},
 		success: function(result){
 			console.log(result);
 			data = result;

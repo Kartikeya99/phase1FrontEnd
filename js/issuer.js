@@ -29,8 +29,9 @@ $(document).ready(function(){
     }
 
 
-	/*$.ajax({
+	$.ajax({
 			url: baseUrl+'/viewIssuerInfo/'+ localStorage.issuerId , // this call is made to get the information about the issuer
+			headers:{'Authorization':localStorage.token},
 			success: function(result){
 				var issuerData = result;
 				console.log(issuerData);
@@ -45,11 +46,9 @@ $(document).ready(function(){
 					generateIssuerDashboard(issuerData);
                 }
 			}
-		});*/
+		});
 
-/*
 	fileUpload();
-*/
 });
 
 //this generates the issuer navbar according to the issuer data
@@ -63,7 +62,8 @@ function generateIssuerDashboard(issuerData)
 	//iterates through each and every batch id
 	$.map(issuerData.batchIds,function(batchId,index){
 			$.ajax({
-				url: "http:localhost:8080/viewBatchInfo/" + batchId, //makes this call to create the card of the batch contents.
+				url: baseUrl + "/viewBatchInfo/" + batchId, //makes this call to create the card of the batch contents.
+				headers:{'Authorization':localStorage.token},
 				success: function(result){batchData = result},
 				statusCode : {200 : function(){
 						console.log(batchData);
@@ -83,7 +83,8 @@ function generateIssuerDashboard(issuerData)
 function redirect(element){
 	var batchId = element.id;
 	$.ajax({
-		url: "http:localhost:8080/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
+		url:  baseUrl + "/viewBatchInfo/"+batchId, //makes this call to create the card of the batch contents.
+		headers:{'Authorization':localStorage.token},
 		success: function(result){
 			var batchData = result;
 			if(batchData.batchStatus >= 3){
@@ -142,12 +143,12 @@ function issue(){
 	var description = String($("#description").val());
 	var numCerts = $("#numCerts").val();
 	var dataObj = JSON.stringify({"title":title,"description":description,"numCerts":parseInt(numCerts,10),"batchId":"","issuerId":localStorage.issuerId});
-	var headers = {"Content-Type":"application/json;charset=UTF-8"};
+	var headers = {"Content-Type":"application/json;charset=UTF-8",'Authorization':localStorage.token};
 	console.log(dataObj);
 
 	$.ajax({
 		type: 'POST',
-		url: 'http://localhost:8080/createBatch', //makes the api call for issuing the batch
+		url: baseUrl + '/createBatch', //makes the api call for issuing the batch
 		data: dataObj,
 		headers:headers,
 		success: function(resp) {
@@ -169,24 +170,25 @@ function issue(){
 			$.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',
-				url: baseUrl + "/uploadRawData/"+localStorage.issuerId + '/' + sessionStorage.newBatchId,
+				url: "http://localhost:8080" + '/uploadRawData/'+localStorage.issuerId + '/' + sessionStorage.newBatchId,
+				headers:{'Authorization':localStorage.token},
 				data: formData,
 				processData: false,
 				contentType: false,
-				cache: false,
-				timeout: 600000,
 				success: function (data){
 					console.log("SUCCESS : ", data);
-					$.ajax({
-						url: baseUrl + "/certProcessTrigger/" + localStorage.issuerId+'/'+sessionStorage.newBatchId,
-						success: function(result){
-							console.log("Done!");
-						}
-					});
 				},
 				error: function (e) {
 					console.log("ERROR : ", e);
 				}
+			}).done(function(){
+                $.ajax({
+                    url: baseUrl + "/certProcessTrigger/" + localStorage.issuerId+'/'+sessionStorage.newBatchId,
+                    headers:{'Authorization':localStorage.token},
+                    success: function(result){
+                        console.log("Done!");
+                    }
+                });
 			});
 		}
 	});

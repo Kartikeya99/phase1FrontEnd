@@ -1,4 +1,4 @@
-var baseUrl = 'http:localhost:8080';
+var baseUrl = 'https://backend.quze.co';
 var issuerData;
 //this generates the issuer navbar according to the issuer data
 function generateIssuerNavbar(issuerId){
@@ -19,7 +19,7 @@ function updateIssuerProfile()
             alert("All the fields are mandatory including the pic. We need them to setup the config");
             return;
         }
-        var headers = {'Content-Type': 'application/json;charset=utf8'};
+        var headers = {'Content-Type': 'application/json;charset=utf8','Authorization':localStorage.token};
         updateObj.initialized = 1;
 
         $.ajax({
@@ -36,6 +36,7 @@ function updateIssuerProfile()
                 $.ajax({
                     url: baseUrl + "/uploadPic/" + issuerData.issuerId,
                     type: 'POST',
+                    headers:{'Authorization':localStorage.token},
                     data: formData,
                     processData: false,
                     contentType: false,
@@ -78,7 +79,7 @@ function updateIssuerProfile()
 		}
 
         updateObj.initialized = 1;
-        var headers = {'Content-Type': 'application/json;charset=utf8'};
+        var headers = {'Content-Type': 'application/json;charset=utf8','Authorization':localStorage.token};
         $.ajax({
             url: baseUrl + "/updateIssuerInfo/",
             type: "POST",
@@ -117,6 +118,7 @@ $(document).ready(function(){
 
     $.ajax({
         url:baseUrl+"/viewIssuerInfo/"+localStorage.issuerId,
+        headers:{'Authorization':localStorage.token},
 		success:function(result){
         	console.log(result);
         	issuerData = result;
@@ -124,6 +126,7 @@ $(document).ready(function(){
 			{
 				$.ajax({
 					url:baseUrl+"/getPic/"+result.issuerId,
+                    headers:{'Authorization':localStorage.token},
 					success:function (data) {
 						$("#profilePic").attr('src',"data:image/png;base64, "+data);
                     }
