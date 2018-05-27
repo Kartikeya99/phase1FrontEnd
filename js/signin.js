@@ -1,10 +1,11 @@
 $(document).ready(function(){
 
+    // Checks for localstorage and redirects accordingly
     if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
-        window.location.replace("issuer.html");
+        window.location.replace("issuerHome.html");
     }
     else if (localStorage.getItem("type") === "recipient" && localStorage.getItem("recipientId") !== "" && localStorage.getItem("token") !== "") {
-        window.location.replace("recipient.html");
+        window.location.replace("recipientHome.html");
     }
     else {
         var i = localStorage.length;
@@ -20,10 +21,6 @@ $(document).ready(function(){
             key2 = sessionStorage.key(j);
             sessionStorage.removeItem(key2);
         }
-
-/*
-        window.location.replace("signin.html");
-*/
     }
 
 });
@@ -61,13 +58,13 @@ function signin() {
                 {
                     localStorage.setItem("type",data.type);
                     localStorage.setItem("issuerId",userId);
-                    window.location.replace("issuer.html");
+                    window.location.replace("issuerHome.html");
                 }
                 else if(data.type === "recipient")
                 {
                     localStorage.setItem("type",data.type);
                     localStorage.setItem("recipientId",userId);
-                    window.location.replace("recipient.html");
+                    window.location.replace("recipientHome.html");
                 }
                 else if(data.userId === "error")
                 {

@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>QUZE | Recipient Home</title>
+	<title>QUZE | Issuer</title>
 
 	<link href="css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
@@ -30,7 +30,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				  </button>
-				<a href="issuer.html"><img src="images/img3.png" id="navbarImage1"></a>
+				<a href="index.html"><img src="images/img3.png" id="navbarImage1"></a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav" id="menu">
@@ -41,7 +41,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<!-- <li class="active" id="issuerName"></li> -->
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle active" id="recipientId" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><!-- <img src="images/placeholder.png" id="navbarImage2"> --></a>
+						<a href="#" class="dropdown-toggle active" id="issuerId" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><!-- <img src="images/placeholder.png" id="navbarImage2"> --></a>
 						<ul class="dropdown-menu">
 							<li><a href="#" style="color:black;padding:10px;">ACCOUNT</a></li>
 							<li><a href="#" style="color:black;padding:10px;">SETTINGS</a></li>
@@ -55,29 +55,8 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 
-	<div class="container">	
-		<h4 class="typeOfCertificate">BATCHES</h4>			
-		<div class="row">
-			<div class="certificate col-md-12" data-toggle="modal" data-target="#certModal">
-				<div class="infoOfCertificate">
-					<p>Test Batch 1</p>
-					<p>B.S Computer Science class of 2015</p>
-					<p>10 students</p>	
-				</div>	
-				<i class="fa fa-check-circle-o tickIcon" aria-hidden="true"></i>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="certificate col-md-12" data-toggle="modal" data-target="#certModal">
-				<div class="infoOfCertificate">
-					<p>Test Batch 1</p>
-					<p>B.S Electrical class of 2015</p>
-					<p>10 students</p>
-				</div>
-				<i class="fa fa-check-circle-o tickIcon" aria-hidden="true"></i>
-			</div>
-		</div>
+	<div class="container" id="containerDisplayingBatches">
+		<h4 class="typeOfCertificate">BATCHES</h4>
 	</div>
 
 	<a href="#" class="float" onclick="createBatchButton();">
@@ -126,7 +105,7 @@
 									<br />
 									<label for="imageUpload" class="file-upload__label" style="max-width: 11em;">Upload Images</label>
 									<input type="file" id="imageUpload" name="imageUpload" class="file-upload__input" placeholder="Certificate Image" multiple>
-									<div id="selectedImageFiles">Uploaded Images are : </div>
+									<div id="selectedImageFiles">Number uploaded is : </div>
 								</div>
 							</div>
 							<div class="row">

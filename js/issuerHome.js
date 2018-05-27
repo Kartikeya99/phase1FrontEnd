@@ -2,7 +2,8 @@ var baseUrl = 'https://backend.quze.co';
 var issuerData;
 //this generates the issuer navbar according to the issuer data
 function generateIssuerNavbar(issuerId){
-	$("#issuerId").prepend("<span>"+issuerId+"</span>");
+    $("#welcomeIssuerHomeUserName").prepend("<span>"+issuerId+"</span>");
+    $("#issuerId").prepend("<span>"+issuerId+"</span>");
 }
 
 function updateIssuerProfile()
@@ -49,20 +50,20 @@ function updateIssuerProfile()
         });
     }
     else if(issuerData.initialized === 1)
-	{
+    {
         var issuerName = $("#issuerName").val();
         var issuerUrl = $("#issuerUrl").val();
 
         if(issuerName != "")
-		{
-			updateObj.issuerName = issuerName;
-		}
+        {
+            updateObj.issuerName = issuerName;
+        }
         if(issuerUrl != "")
         {
             updateObj.issuerUrl = issuerUrl;
         }
         if(document.getElementById("inputPhoto").files.length != 0)
-		{
+        {
             var formData = new FormData();
             formData.append("file", document.getElementById("inputPhoto").files[0]);
             $.ajax({
@@ -76,7 +77,7 @@ function updateIssuerProfile()
                     console.log("Pic Upload Done!");
                 }
             });
-		}
+        }
 
         updateObj.initialized = 1;
         var headers = {'Content-Type': 'application/json;charset=utf8','Authorization':localStorage.token};
@@ -90,7 +91,7 @@ function updateIssuerProfile()
             }
         });
 
-	}
+    }
 }
 
 function logOut()
@@ -114,33 +115,59 @@ function logOut()
 
 
 $(document).ready(function(){
+
+    if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
+        
+    }
+    else if (localStorage.getItem("type") === "recipient" && localStorage.getItem("recipientId") !== "" && localStorage.getItem("token") !== "") {
+        window.location.replace("recipientHome.html");
+    }
+    else {
+        var i = localStorage.length;
+        var key;
+        while (i--) {
+            key = localStorage.key(i);
+            localStorage.removeItem(key);
+        }
+
+        var j = sessionStorage.length;
+        var key2;
+        while (j--) {
+            key2 = sessionStorage.key(j);
+            sessionStorage.removeItem(key2);
+        }
+
+        window.location.replace("signin.html");
+    }
+
     generateIssuerNavbar(localStorage.issuerId);
 
     $.ajax({
         url:baseUrl+"/viewIssuerInfo/"+localStorage.issuerId,
         headers:{'Authorization':localStorage.token},
-		success:function(result){
-        	console.log(result);
-        	issuerData = result;
-        	if(result.initialized === 1)
-			{
-				$.ajax({
-					url:baseUrl+"/getPic/"+result.issuerId,
+        success:function(result){
+            console.log(result);
+            issuerData = result;
+            if(result.initialized === 1)
+            {
+                $.ajax({
+                    url:baseUrl+"/getPic/"+result.issuerId,
                     headers:{'Authorization':localStorage.token},
-					success:function (data) {
-						$("#profilePic").attr('src',"data:image/png;base64, "+data);
+                    success:function (data) {
+                        $("#profilePic").attr('src',"data:image/png;base64, "+data);
+                        $("#welcomeProfilePic").attr('src',"data:image/png;base64, "+data);
                     }
-				});
-			}
-			$("#profileData").append("<div>\n" +
+                });
+            }
+            $("#profileData").append("<div>\n" +
                 "\t\t\t\t\t\t<label>Issuer ID</label>\n" +
                 "\t\t\t\t\t\t<p style=\"border:solid 0.2px #bdbdbd; padding:10px;\">"+result.issuerId+"</p>\n" +
                 "\t\t\t\t\t</div>\n" +
                 "\t\t\t\t\t<div>\n" +
                 "\t\t\t\t\t\t<label>Email</label>\n" +
                 "\t\t\t\t\t\t<p style=\"border:solid 0.2px #bdbdbd; padding:10px;\">" + result.email + "</p>\n" +
-                "\t\t\t\t\t</div>" + "<p class=\"btn btn-danger\" onclick='updateIssuerProfile();'>Save</p>");
-		}
+                "\t\t\t\t\t</div>" + "<p class=\"btn btn-primary\" onclick='updateIssuerProfile();' style='margin-top:10px;'>Save</p>");
+        }
     })
 
 });
