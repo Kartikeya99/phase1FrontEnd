@@ -45,3 +45,23 @@ $(document).ready(function(){
 function generateIssuerNavbar(issuerData){
 	$("#issuerId").prepend("<span>"+ issuerData.issuerId+"</span>");
 }
+
+function logOut() {
+    var i = localStorage.length;
+    var key;
+    while (i--)
+    {
+        key = localStorage.key(i);
+        localStorage.removeItem(key);
+    }
+
+    var j = sessionStorage.length;
+    var key2;
+    while(j--)
+    {
+        key2 = sessionStorage.key(j);
+        sessionStorage.removeItem(key2);
+    }
+    window.location.replace("signin.html");
+
+}

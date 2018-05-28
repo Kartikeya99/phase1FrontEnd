@@ -46,7 +46,7 @@
 							<li><a href="#" style="color:black;padding:10px;">SETTINGS</a></li>
 							<li><a href="#" style="color:black;padding:10px;">HELP</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#" style="padding:10px;" onclick="logOut();">Log Out</a></li>
+							<li><a href="#" style="padding:10px;" onclick="logOut();">LOG OUT</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -54,31 +54,8 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 
-	<div class="container">
-		<div class="row">
-			<h4 class="typeOfCertificate">EDUCATION</h4>
-			<div class="certificate col-md-12" data-toggle="modal" data-target="#certModal">
-				<img src="images/uiuc.jpg" class="certificateImage">
-				<div class="infoOfCertificate">
-					<p>University of Illinois</p>
-					<p>B.S Computer Science</p>
-					<p>2010-2014</p>	
-				</div>	
-				<span class="glyphicon glyphicon-ok certificateGlyphs" style="color: green;"></span>	
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="certificate col-md-12" data-toggle="modal" data-target="#certModal">
-				<img src="images/oxford.png" class="certificateImage">
-				<div class="infoOfCertificate">
-					<p>Oxford University</p>
-					<p>M.S Computer Science</p>
-					<p>2015-2017</p>
-				</div>
-				<span class="glyphicon glyphicon-ok certificateGlyphs" style="color: green;"></span>
-			</div>
-		</div>
+	<div class="container" id="certDisplayContainer">
+		<h4 class="typeOfCertificate">EDUCATION</h4>
 
 		<!--<div class="row">
 			<h4 class="typeCertificates">COURSES</h4>

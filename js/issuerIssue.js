@@ -73,6 +73,8 @@ $(document).ready(function(){
 			}
 		}
 	});
+
+	fileUpload();
 });
 
 //this generates the issuer navbar according to the issuer data
@@ -127,7 +129,7 @@ function generateIssuerDashboard(issuerData){
 }
 
 //the function redirects the user to the new page according to the card of the batch clicked
-function redirect(element){
+/*function redirect(element){
 	var batchId = element.id;
 	$.ajax({
 		url:  baseUrl + "/viewBatchInfo/"+ batchId, //makes this call to create the card of the batch contents.
@@ -143,7 +145,7 @@ function redirect(element){
 			}
 		}
 	});
-}
+}*/
 
 //this is the code that adds multiple files as uploaded by the user to the browser and displays it to the screen
 function fileUpload(){
