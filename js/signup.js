@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
         window.location.replace("issuerHome.html");
     }
@@ -21,9 +20,9 @@ $(document).ready(function(){
             sessionStorage.removeItem(key2);
         }
     }
-
 });
 
+// the back button that allows to go between the screens
 $("#internalBackBtn").click(function () {
 	$("#firstPage").css("display", "block");
 	$("#secondPage").css("display", "none");
@@ -51,6 +50,8 @@ function signup() {
 
 	var headers = {'Content-Type':'application/json;charset=utf8'};
 
+    //it makes three consecutive ajax calls..., the first one to check whether a user with the give username exists or not if not make one, 
+    //the second to the login url to get the token of the already created user and the third one to actually replace the user to the given page
 	$.ajax({
         url: baseUrl + '/register',
         type: "POST",
@@ -85,7 +86,7 @@ function signup() {
     })
 }
 
-
+// used to check which kind of login button was clicked from the first screen
 function typeOfLogin(clicked_id){
 	if (clicked_id === 'studentLoginButton') {
         type = 'recipient';

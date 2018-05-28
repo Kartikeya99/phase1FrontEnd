@@ -1,14 +1,15 @@
+// we keep a base url as all the calls will be made to this base url
 var baseUrl = 'https://backend.quze.co';
 var issuerData;
+
 //this generates the issuer navbar according to the issuer data
 function generateIssuerNavbar(issuerId){
     $("#welcomeIssuerHomeUserName").prepend("<span>"+issuerId+"</span>");
     $("#issuerId").prepend("<span>"+issuerId+"</span>");
 }
 
-function updateIssuerProfile()
-{
-
+// this is used to update the profile information that the user enters
+function updateIssuerProfile(){
     var updateObj = issuerData;
 
     if(issuerData.initialized === 0) {
@@ -90,12 +91,10 @@ function updateIssuerProfile()
                 console.log("Done!");
             }
         });
-
     }
 }
 
-function logOut()
-{
+function logOut(){
     var i = localStorage.length, key;
     while (i--)
     {
@@ -115,10 +114,8 @@ function logOut()
 
 
 $(document).ready(function(){
-
-    if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
-        
-    }
+    //we keep this empty as the page doesn't need to be replaced with any other page as we are already on the page as needed
+    if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {}
     else if (localStorage.getItem("type") === "recipient" && localStorage.getItem("recipientId") !== "" && localStorage.getItem("token") !== "") {
         window.location.replace("recipientHome.html");
     }
@@ -140,8 +137,10 @@ $(document).ready(function(){
         window.location.replace("signin.html");
     }
 
+    // we insert proper data into navbar with this
     generateIssuerNavbar(localStorage.issuerId);
 
+    // this call is done to get the already filled out data by the user in the profile section in after the welcome message on this page.
     $.ajax({
         url:baseUrl+"/viewIssuerInfo/"+localStorage.issuerId,
         headers:{'Authorization':localStorage.token},

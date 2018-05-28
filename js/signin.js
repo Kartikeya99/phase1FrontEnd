@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     // Checks for localstorage and redirects accordingly
     if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
         window.location.replace("issuerHome.html");
@@ -22,7 +21,6 @@ $(document).ready(function(){
             sessionStorage.removeItem(key2);
         }
     }
-
 });
 
 
@@ -37,6 +35,7 @@ function signin() {
 
     var headers = {'Content-Type':'application/json;charset=utf8'};
 
+    // it makes two consecutive ajax calls, one to see if the credentials entered are right or not, the second to get the token related to the user and redirect to the proper page.
     $.ajax({
         url: baseUrl+'/login',
         type:"POST",
@@ -70,7 +69,6 @@ function signin() {
                 {
                     alert(data.type);
                 }
-
             }
         });
     });

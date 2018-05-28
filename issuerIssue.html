@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-	<title>QUZE | Issuer</title>
+	<title>QUZE | Issuer Issue</title>
 
 	<link href="css/bootstrap.min.css" rel="stylesheet"><!-- Bootstrap -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
@@ -20,6 +20,7 @@
 </head>
 <body>
 
+	<!-- navbar -->
 	<nav class="navbar">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
@@ -30,7 +31,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				  </button>
-				<a href="index.html"><img src="images/img3.png" id="navbarImage1"></a>
+				<a href="issuerHome.html"><img src="images/img3.png" id="navbarImage1"></a>
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav" id="menu">
@@ -59,11 +60,13 @@
 		<h4 class="typeOfCertificate">BATCHES</h4>
 	</div>
 
+	<!-- this is the floating action button -- >
 	<a href="#" class="float" onclick="createBatchButton();">
 		<i class="glyphicon glyphicon-plus my-float" id="createBatch"></i>
 		<i class="glyphicon glyphicon-remove my-float" id="removeModal"></i>
 	</a>
 
+	<!-- This the options menu that opens when pressed the floating action button -->
 	<div class="container">
 		<div class="row">
 			<div id="createBatchButtonModal" class="col-sm-2 col-xs-4">
@@ -74,6 +77,7 @@
 		</div>
 	</div>
 
+	<!-- The dialog box modal that opens after pressing the create batch button -->
 	<div class="container" id="batchCreationDialogModal">
 		<div class="row">
 			<div class="col-sm-10 col-sm-offset-1">
