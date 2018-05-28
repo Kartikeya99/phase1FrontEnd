@@ -56,7 +56,7 @@ function generateRecipientNavbar(recipientId){
 function displayCerts(recipientId)
 {
     $.ajax({
-        url:baseUrl +"/recipientCertList/"+recipientId ,
+        url:baseUrl + "/recipientCertList/"+recipientId ,
         headers:{"Content-Type":"application/json","Authorization":localStorage.token},
         type:"GET"
     }).done(function (response) {
