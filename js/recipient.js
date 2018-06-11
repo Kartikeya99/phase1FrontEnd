@@ -63,39 +63,39 @@ function displayCerts(recipientId)
 		console.log(response);
 		for(var i=0;i<response.length;i++)
 		{
-			console.log(response[i].batchId);
-			$.ajax({
+            $.ajax({
 				url:baseUrl+"/viewBatchInfo"+'/'+response[i].batchId,
-				headers:{"Authorization":localStorage.token}
-			}).done(function(data,i,response){
-				// language=HTML
-                var certInfo = $("<div class=\"row\">\n" +
-					"\t\t<div class=\"certificate col-md-12\" data-toggle=\"modal\" data-target=\"#certModal\" id=\""+data.batchId+"certificate"+"\" onclick=\"certificateVerifier(this.id)\">\n" +
-					"\t\t\t\t<div class=\"container-fluid\""+
-					"\t\t\t\t\t\t<div class=\"row\">" +
-					"\t\t\t\t\t\t\t\t<img src=\"\" class=\"certificateImage certImg\" id=\""+data.batchId+"institutionImage"+"\">\n" +
-					"\t\t\t\t\t\t\t\t<div class=\"infoOfCertificate\">\n" +
-					"\t\t\t\t\t\t\t\t\t\t<p>" + data.issuerId +"</p>\n" +
-					"\t\t\t\t\t\t\t\t\t\t<p>" + data.title +"</p>\n" +
-					"\t\t\t\t\t\t\t\t\t\t<p>" + data.description + "</p>\n" +
-					"\t\t\t\t\t\t\t\t</div>\t\n" +
-					"\t\t\t\t\t\t\t\t<i class=\"fa fa-check-circle-o tickIcon\" aria-hidden=\"true\"></i>\t\n" +
-					"\t\t\t\t\t\t</div>\n" +
-                    "\t\t\t\t\t\t<div class=\"row addedInformation\" id=\""+data.batchId+"certificateAddedInformation\"></div>"+
-					"\t\t\t\t</div>"+
-					"\t\t</div>"+
-					"</div>");
-				//certInfo.attr('id',response[i].certId);
-				$("#certDisplayContainer").append(certInfo);
+				headers:{"Authorization":localStorage.token},
+				certificateId : response[i].certId,
+				success: function(data) {
+                    // language=HTML
+                    var certInfo = $("<div class=\"row\">\n" +
+                        "\t\t<div class=\"certificate col-md-12\" data-toggle=\"modal\" data-target=\"#certModal\" id=\"" + data.batchId+"_"+ this.certificateId + "\" onclick=\"certificateVerifier(this.id)\"\">\n" +
+                        "\t\t\t\t<div class=\"container-fluid\"" +
+                        "\t\t\t\t\t\t<div class=\"row\">" +
+                        "\t\t\t\t\t\t\t\t<img src=\"\" class=\"certificateImage certImg\" id=\"" + data.batchId + "institutionImage" + "\">\n" +
+                        "\t\t\t\t\t\t\t\t<div class=\"infoOfCertificate\">\n" +
+                        "\t\t\t\t\t\t\t\t\t\t<p>" + data.issuerId + "</p>\n" +
+                        "\t\t\t\t\t\t\t\t\t\t<p>" + data.title + "</p>\n" +
+                        "\t\t\t\t\t\t\t\t\t\t<p>" + data.description + "</p>\n" +
+                        "\t\t\t\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t\t\t\t\t<i class=\"fa fa-check-circle-o tickIcon\" aria-hidden=\"true\"></i>\t\n" +
+                        "\t\t\t\t\t\t</div>\n" +
+                        "\t\t\t\t\t\t<div class=\"row addedInformation\" id=\"" + data.batchId + "certificateAddedInformation\"></div>" +
+                        "\t\t\t\t</div>" +
+                        "\t\t</div>" +
+                        "</div>");
+                    //certInfo.attr("onclick", "certificateVerifier("+ "abc" + ","+ idOfCertificate+")");
+                    $("#certDisplayContainer").append(certInfo);
 
-				$.ajax({
-					url:baseUrl+"/getPic/"+data.issuerId,
-					headers:{'Authorization':localStorage.token},
-					success:function (response) {
-						$("#"+data.batchId+"institutionImage").attr('src',"data:image/png;base64, "+response);
-					}
-				});
-			})
+                    $.ajax({
+                        url: baseUrl + "/getPic/" + data.issuerId,
+                        headers: {'Authorization': localStorage.token},
+                        success: function (response) {
+                            $("#" + data.batchId + "institutionImage").attr('src', "data:image/png;base64, " + response);
+                        }
+                    });
+                }})
 		}
 	});
 }
@@ -103,18 +103,15 @@ function displayCerts(recipientId)
 var data;
 
 // this is the dynamically calls the image through the api call as the user clicks on the row of the table
-function callImage(element) {
-	var myNode = document.getElementById("certImg");
-	while (myNode.firstChild) { myNode.removeChild(myNode.firstChild); } // we do this to remove the previously stored image and then append the new image that we got from the api call down below
+function callImage(id) {
+	console.log(id);
 	$.ajax({
-		url: baseUrl+"/downloadCert/"+element.id,
+		url: baseUrl+"/downloadCert/"+id,
+        headers: {'Authorization': localStorage.token},
 		success: function(result){
-			console.log(result);
-			data = result;
-			var image = new Image(); // in the following three lines we create a new image object and add it inside the #certImage id in the dom
-			image.src = result.badge.image;
-			$("#certImg").append(image);
-					
+			//image.src = result.badge.image;
+			//$("#"+id).attr('src', result.badge.image);
+			document.getElementById(id).src= result.badge.image;
 		}
 	});
 }
@@ -128,14 +125,19 @@ function verifyCert(){
 var imageStatus = 0;
 
 function certificateVerifier(id){
+	var ids = id.split("_");
+	var batchId = ids[0];
+	var certificateId = ids[1];
     if(!imageStatus){
-        $("#"+id+"AddedInformation").css("display", "block");
-        $("#"+id+"AddedInformation").append("<img src=\"images/placeholder.png\" class=\"addedCertificateImage col-xs-10 col-xs-offset-1\" id=\""+id+"image" +"\"><br /><button type=\"button\" class=\"btn verifyButton btn-lg\" onclick=\"verifyCert()\">VERIFY</button>");
+        $("#"+batchId+"certificateAddedInformation").css("display", "block");
+        $("#"+batchId+"certificateAddedInformation").append("<img class=\"addedCertificateImage col-xs-10 col-xs-offset-1\" id=\""+certificateId +"\"><br /><button type=\"button\" class=\"btn verifyButton btn-lg\" onclick=\"verifyCert()\">VERIFY</button>");
         imageStatus=1;
+        callImage(certificateId);
+        $("#"+id).css("box-shadow", "2px 2px 2px blue");
     }
     else{
-        $("#"+id+"AddedInformation").empty();
-        $("#"+id+"AddedInformation").css("display", "none");
+        $("#"+batchId+"certificateAddedInformation").empty();
+        $("#"+batchId+"certificateAddedInformation").css("display", "none");
         imageStatus=0;
     }
 }
