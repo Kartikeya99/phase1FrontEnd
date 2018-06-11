@@ -68,17 +68,23 @@ function displayCerts(recipientId)
 				url:baseUrl+"/viewBatchInfo"+'/'+response[i].batchId,
 				headers:{"Authorization":localStorage.token}
 			}).done(function(data,i,response){
-				var certInfo = $("<div class=\"row\">\n" +
-					"\t\t\t<div class=\"certificate col-md-12\" data-toggle=\"modal\" data-target=\"#certModal\" id=\""+data.batchId+"certificate"+"\">\n" +
-					"\t\t\t\t<img src=\"\" class=\"certificateImage certImg\" id=\""+data.batchId+"image"+"\">\n" +
-					"\t\t\t\t<div class=\"infoOfCertificate\">\n" +
-					"\t\t\t\t\t<p>" + data.issuerId +"</p>\n" +
-					"\t\t\t\t\t<p>" + data.title +"</p>\n" +
-					"\t\t\t\t\t<p>" + data.description + "</p>\n" +
-					"\t\t\t\t</div>\t\n" +
-					"\t\t\t\t<i class=\"fa fa-check-circle-o tickIcon\" aria-hidden=\"true\"></i>\t\n" +
-					"\t\t\t</div>\n" +
-					"\t\t</div>");
+				// language=HTML
+                var certInfo = $("<div class=\"row\">\n" +
+					"\t\t<div class=\"certificate col-md-12\" data-toggle=\"modal\" data-target=\"#certModal\" id=\""+data.batchId+"certificate"+"\" onclick=\"certificateVerifier(this.id)\">\n" +
+					"\t\t\t\t<div class=\"container-fluid\""+
+					"\t\t\t\t\t\t<div class=\"row\">" +
+					"\t\t\t\t\t\t\t\t<img src=\"\" class=\"certificateImage certImg\" id=\""+data.batchId+"institutionImage"+"\">\n" +
+					"\t\t\t\t\t\t\t\t<div class=\"infoOfCertificate\">\n" +
+					"\t\t\t\t\t\t\t\t\t\t<p>" + data.issuerId +"</p>\n" +
+					"\t\t\t\t\t\t\t\t\t\t<p>" + data.title +"</p>\n" +
+					"\t\t\t\t\t\t\t\t\t\t<p>" + data.description + "</p>\n" +
+					"\t\t\t\t\t\t\t\t</div>\t\n" +
+					"\t\t\t\t\t\t\t\t<i class=\"fa fa-check-circle-o tickIcon\" aria-hidden=\"true\"></i>\t\n" +
+					"\t\t\t\t\t\t</div>\n" +
+                    "\t\t\t\t\t\t<div class=\"row addedInformation\" id=\""+data.batchId+"certificateAddedInformation\"></div>"+
+					"\t\t\t\t</div>"+
+					"\t\t</div>"+
+					"</div>");
 				//certInfo.attr('id',response[i].certId);
 				$("#certDisplayContainer").append(certInfo);
 
@@ -86,7 +92,7 @@ function displayCerts(recipientId)
 					url:baseUrl+"/getPic/"+data.issuerId,
 					headers:{'Authorization':localStorage.token},
 					success:function (response) {
-						$("#"+data.batchId+"image").attr('src',"data:image/png;base64, "+response);
+						$("#"+data.batchId+"institutionImage").attr('src',"data:image/png;base64, "+response);
 					}
 				});
 			})
@@ -116,6 +122,22 @@ function callImage(element) {
 // this is used to verify the certificates that have been uploaded
 function verifyCert(){
 
+}
+
+// this is used for the collapsing and showing the certificate image and verifying it
+var imageStatus = 0;
+
+function certificateVerifier(id){
+    if(!imageStatus){
+        $("#"+id+"AddedInformation").css("display", "block");
+        $("#"+id+"AddedInformation").append("<img src=\"images/placeholder.png\" class=\"addedCertificateImage col-xs-10 col-xs-offset-1\" id=\""+id+"image" +"\"><br /><button type=\"button\" class=\"btn verifyButton btn-lg\" onclick=\"verifyCert()\">VERIFY</button>");
+        imageStatus=1;
+    }
+    else{
+        $("#"+id+"AddedInformation").empty();
+        $("#"+id+"AddedInformation").css("display", "none");
+        imageStatus=0;
+    }
 }
 
 function logOut()

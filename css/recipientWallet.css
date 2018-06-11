@@ -77,8 +77,8 @@ p{
 .certificate{
 	width: 100%;
 	background-color: white;
-	padding-left: 0px;
-	padding-right: 0px;
+	padding-left: 0;
+	padding-right: 0;
 }
 .certificateImage{
 	position: relative;
@@ -96,5 +96,26 @@ p{
 }
 .glyphicon.certificateGlyphs{
 	margin-top: 55px;
+}
 
+.addedInformation{
+	display: none;
+	margin-top: 20px;
+	padding-bottom: 1em;
+}
+.addedCertificateImage{
+	height: 500px;
+}
+.verifyButton{
+	border-radius: 0;
+	background-color: black;
+	color: white;
+	margin-top: 0.5em;
+	margin-left: 45%;
+}
+.verifyButton:hover{
+	color: white;
+}
+.certificate.container-fluid.row{
+	margin-bottom: 0px;
 }
