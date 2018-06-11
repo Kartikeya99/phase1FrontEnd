@@ -100,25 +100,75 @@ function displayCerts(recipientId)
 	});
 }
 
-var data;
+var data = {};
 
 // this is the dynamically calls the image through the api call as the user clicks on the row of the table
 function callImage(id) {
-	console.log(id);
 	$.ajax({
 		url: baseUrl+"/downloadCert/"+id,
         headers: {'Authorization': localStorage.token},
 		success: function(result){
-			//image.src = result.badge.image;
-			//$("#"+id).attr('src', result.badge.image);
 			document.getElementById(id).src= result.badge.image;
+			data["btn"+id] = result;
 		}
 	});
 }
 
 // this is used to verify the certificates that have been uploaded
-function verifyCert(){
+function verifyCert(id){
+	console.log(id);
+	console.log(data[id]);
+    const dataString = JSON.stringify(data[id]);
 
+    function updateStatus(status, message) {
+        let statusString = "";
+        switch (status) {
+            case Verifier.Status.computingLocalHash:
+                statusString = "Computing local hash...";
+                break;
+            case Verifier.Status.fetchingRemoteHash:
+                statusString = "Fetching remote hash...";
+                break;
+            case Verifier.Status.parsingIssuerKeys:
+                statusString = "Parsing issuer keys";
+                break;
+            case Verifier.Status.comparingHashes:
+                statusString = "Comparing local and remote hashes...";
+                break;
+            case Verifier.Status.checkingMerkleRoot:
+                statusString = "Checking merkle root...";
+                break;
+            case Verifier.Status.checkingReceipt:
+                statusString = "Checking the receipt...";
+                break;
+            case Verifier.Status.checkingIssuerSignature:
+                statusString = "Checking the issuer's signature...";
+                break;
+            case Verifier.Status.checkingRevokedStatus:
+                statusString = "Checking if the certificate has been revoked...";
+                break;
+            case Verifier.Status.checkingAuthenticity:
+                statusString = "Checking the authenticity";
+                break;
+            case Verifier.Status.checkingExpiresDate:
+                statusString = "Checking the expiry date";
+                break;
+            case Verifier.Status.success:
+                statusString = "This is a valid certificate!";
+                alert(statusString);
+                break;
+            case Verifier.Status.failure:
+                statusString = "This is not valid " + message;
+                alert("This Certificate is Invalid!");
+                break;
+        }
+        console.log(statusString);
+    }
+
+    const verifier = new Verifier.CertificateVerifier(dataString, (status, message) => {
+        updateStatus(status, message);
+	});
+    verifier.verify();
 }
 
 // this is used for the collapsing and showing the certificate image and verifying it
@@ -130,7 +180,7 @@ function certificateVerifier(id){
 	var certificateId = ids[1];
     if(!imageStatus){
         $("#"+batchId+"certificateAddedInformation").css("display", "block");
-        $("#"+batchId+"certificateAddedInformation").append("<img class=\"addedCertificateImage col-xs-10 col-xs-offset-1\" id=\""+certificateId +"\"><br /><button type=\"button\" class=\"btn verifyButton btn-lg\" onclick=\"verifyCert()\">VERIFY</button>");
+        $("#"+batchId+"certificateAddedInformation").append("<img class=\"addedCertificateImage col-xs-10 col-xs-offset-1\" id=\""+certificateId +"\"><br /><button id=\"btn"+certificateId+"\" type=\"button\" class=\"btn verifyButton btn-lg\" onclick=\"verifyCert(this.id)\">VERIFY</button>");
         imageStatus=1;
         callImage(certificateId);
         $("#"+id).css("box-shadow", "2px 2px 2px blue");
