@@ -2,30 +2,30 @@ var baseUrl = 'https://backend.quze.co';
 
 $(document).ready(function(){
 
-    if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
-        window.location.replace("issuerHome.html");
-    }
-    else if (localStorage.getItem("type") === "recipient" && localStorage.getItem("recipientId") !== "" && localStorage.getItem("token") !== "") {
-    }
-    else {
-        var i = localStorage.length;
-        var key;
-        while (i--) {
-            key = localStorage.key(i);
-            localStorage.removeItem(key);
-        }
+	if (localStorage.getItem("type") === "issuer" && localStorage.getItem("issuerId") !== "" && localStorage.getItem("token") !== "") {
+		window.location.replace("issuerHome.html");
+	}
+	else if (localStorage.getItem("type") === "recipient" && localStorage.getItem("recipientId") !== "" && localStorage.getItem("token") !== "") {
+	}
+	else {
+		var i = localStorage.length;
+		var key;
+		while (i--) {
+			key = localStorage.key(i);
+			localStorage.removeItem(key);
+		}
 
-        var j = sessionStorage.length;
-        var key2;
-        while (j--) {
-            key2 = sessionStorage.key(j);
-            sessionStorage.removeItem(key2);
-        }
+		var j = sessionStorage.length;
+		var key2;
+		while (j--) {
+			key2 = sessionStorage.key(j);
+			sessionStorage.removeItem(key2);
+		}
 
-        window.location.replace("signin.html");
-    }
+		window.location.replace("signin.html");
+	}
 
-    $("#welcomeRecipientHomeUserName").text(localStorage.recipientId);
+	$("#welcomeRecipientHomeUserName").text(localStorage.recipientId);
 	// from this function we dynamically add the username of the issuer 
 	generateRecipientNavbar(localStorage.recipientId);
 	displayCerts(localStorage.recipientId);
@@ -55,44 +55,43 @@ function generateRecipientNavbar(recipientId){
 
 function displayCerts(recipientId)
 {
-    $.ajax({
-        url:baseUrl + "/recipientCertList/"+recipientId ,
-        headers:{"Content-Type":"application/json","Authorization":localStorage.token},
-        type:"GET"
-    }).done(function (response) {
-        console.log(response);
-        for(var i=0;i<response.length;i++)
-        {
-            console.log(response[i].batchId);
-            $.ajax({
-                url:baseUrl+"/viewBatchInfo"+'/'+response[i].batchId,
-                headers:{"Authorization":localStorage.token}
-            }).done(function(data,i,response){
+	$.ajax({
+		url:baseUrl + "/recipientCertList/"+recipientId ,
+		headers:{"Content-Type":"application/json","Authorization":localStorage.token},
+		type:"GET"
+	}).done(function (response) {
+		console.log(response);
+		for(var i=0;i<response.length;i++)
+		{
+			console.log(response[i].batchId);
+			$.ajax({
+				url:baseUrl+"/viewBatchInfo"+'/'+response[i].batchId,
+				headers:{"Authorization":localStorage.token}
+			}).done(function(data,i,response){
+				var certInfo = $("<div class=\"row\">\n" +
+					"\t\t\t<div class=\"certificate col-md-12\" data-toggle=\"modal\" data-target=\"#certModal\" id=\""+data.batchId+"certificate"+"\">\n" +
+					"\t\t\t\t<img src=\"\" class=\"certificateImage certImg\" id=\""+data.batchId+"image"+"\">\n" +
+					"\t\t\t\t<div class=\"infoOfCertificate\">\n" +
+					"\t\t\t\t\t<p>" + data.issuerId +"</p>\n" +
+					"\t\t\t\t\t<p>" + data.title +"</p>\n" +
+					"\t\t\t\t\t<p>" + data.description + "</p>\n" +
+					"\t\t\t\t</div>\t\n" +
+					"\t\t\t\t<i class=\"fa fa-check-circle-o tickIcon\" aria-hidden=\"true\"></i>\t\n" +
+					"\t\t\t</div>\n" +
+					"\t\t</div>");
+				//certInfo.attr('id',response[i].certId);
+				$("#certDisplayContainer").append(certInfo);
 
-                var certInfo = $("<div class=\"row\">\n" +
-                    "\t\t\t<div class=\"certificate col-md-12\" data-toggle=\"modal\" data-target=\"#certModal\">\n" +
-                    "\t\t\t\t<img src=\"\" class=\"certificateImage issuerLogo\">\n" +
-                    "\t\t\t\t<div class=\"infoOfCertificate\">\n" +
-                    "\t\t\t\t\t<p>" + data.issuerId +"</p>\n" +
-                    "\t\t\t\t\t<p>" + data.title +"</p>\n" +
-                    "\t\t\t\t\t<p>" + data.description + "</p>\n" +
-                    "\t\t\t\t</div>\t\n" +
-                    "\t\t\t\t<i class=\"fa fa-check-circle-o tickIcon\" aria-hidden=\"true\"></i>\t\n" +
-                    "\t\t\t</div>\n" +
-                    "\t\t</div>");
-                certInfo.attr('id',response[i].certId);
-                $("#certDisplayContainer").append(certInfo);
-
-                $.ajax({
-                    url:baseUrl+"/getPic/"+data.issuerId,
-                    headers:{'Authorization':localStorage.token},
-                    success:function (data) {
-                        $(".issuerLogo").attr('src',"data:image/png;base64, "+data);
-                    }
-                });
-            })
-        }
-    });
+				$.ajax({
+					url:baseUrl+"/getPic/"+data.issuerId,
+					headers:{'Authorization':localStorage.token},
+					success:function (response) {
+						$("#"+data.batchId+"image").attr('src',"data:image/png;base64, "+response);
+					}
+				});
+			})
+		}
+	});
 }
 
 var data;
@@ -121,19 +120,19 @@ function verifyCert(){
 
 function logOut()
 {
-    var i = localStorage.length, key;
-    while (i--)
-    {
-        key = localStorage.key(i);
-        localStorage.removeItem(key);
-    }
+	var i = localStorage.length, key;
+	while (i--)
+	{
+		key = localStorage.key(i);
+		localStorage.removeItem(key);
+	}
 
-    var j = sessionStorage.length, key2;
-    while(j--)
-    {
-        key2 = sessionStorage.key(j);
-        sessionStorage.removeItem(key);
-    }
+	var j = sessionStorage.length, key2;
+	while(j--)
+	{
+		key2 = sessionStorage.key(j);
+		sessionStorage.removeItem(key);
+	}
 
-    window.location.replace("signin.html");
+	window.location.replace("signin.html");
 }
