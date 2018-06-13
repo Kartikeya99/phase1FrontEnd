@@ -19,7 +19,7 @@ a, a:hover{
 	position: absolute;
 	font-size: 40px;
 	color: green;
-	bottom: 30px;
+	top: 30px;
 	right: 1.5%;
 }
 .underProcessIcon
